@@ -143,12 +143,12 @@ Herramientas como Google Lighthouse, Website Carbon u otras especializadas permi
 * GreenIT Analysis
 * Website Carbon
 * Digital Beacon
-* GreenFrame (our tool)
+* GreenFrame
 * Ecograder
 * PageSpeed Insight
 
 ### 4) Relación con accesibilidad e inclusión
-Crear interfaces cn Green UX es pensar en accesibilidad como consecuencia del cumplimiento de WCAG, implicando interfaces inclusivas y para gran espectro de público. [(Hapy Design)](https://hapy.design/journal/importance-of-sustainable-ux-ui-design)
+Crear interfaces con Green UX es pensar en accesibilidad como consecuencia del cumplimiento de WCAG, implicando interfaces inclusivas y para gran espectro de público. [(Hapy Design)](https://hapy.design/journal/importance-of-sustainable-ux-ui-design)
 
 ---
 
