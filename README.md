@@ -5,11 +5,11 @@
 
 Faba es un proyecto de benchmark de eficiencia front-end que permite comparar diferentes frameworks de desarrollo web bajo condiciones controladas y reproducibles.  Esta eficiencia computada tiene el propósito de dar un apoyo al staff de desarrollo y diseño, alineando dichos resultados  con prácticas de Green UX  y enfoques afines*. En este proyecto teórico-práctico, viviré la experiencia del desarrollo sostenible y demostrar qué tanto impacto benéfico genera al cliente usando varias herramientas y módulos para medir variables de usabilidad, de rendimiento y consumo proxy de energía.
 
-## Enfoque Green UX y sus corrientes aplicado al Frontend
+## Enfoque Green UX y corrientes afines aplicados al Frontend
 
 > “No optimizar solo para el ahora, sino para la continuidad del sistema.”
 
-¿Qué es Green UX y por qué importa?
+### ¿Qué es Green UX y por qué importa?
 
 Green UX (o diseño UX sostenible) es un enfoque que combina la experiencia de usuario (UX) tradicional con criterios de eficiencia energética, menor consumo de recursos y menor huella ambiental en productos digitales. En la práctica, se traduce en interfaces optimizadas, menos datos transferidos y navegación más sencilla, lo cual reduce el consumo de energía tanto en servidores como en dispositivos finales. ([B12](https://www.b12.io/glossary-of-web-design-terms/green-ux-sustainable-web-design))
 
