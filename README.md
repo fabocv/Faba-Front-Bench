@@ -5,7 +5,7 @@
 
 ## ¿Qué es Faba?
 
-Faba es un proyecto de benchmark de eficiencia front-end aplicando y evaluando principios [Green UX](docs/green-ux.md) que permite comparar diferentes frameworks de desarrollo web bajo condiciones controladas y reproducibles. Los resultados están orientados a equipos de desarrollo y diseño UI/UX, y buscan cuantificar tanto la eficiencia de cada framework como el esfuerzo requerido para implementar soluciones sostenibles. Esta información se utiliza como apoyo en decisiones de arquitectura y diseño frontend, así como para generar consciencia sobre el impacto ambiental del software.
+Faba es un proyecto de benchmark de eficiencia front-end basado en principios de  [Green UX](docs/green-ux.md) que permite comparar diferentes frameworks de desarrollo web bajo condiciones controladas y reproducibles. Los resultados están orientados a equipos de desarrollo y diseño UI/UX, y buscan cuantificar tanto la eficiencia de cada framework como el esfuerzo requerido para implementar soluciones sostenibles. Esta información se utiliza como apoyo en decisiones de arquitectura y diseño frontend, así como para generar consciencia sobre el impacto ambiental del software.
 
 ---
 
