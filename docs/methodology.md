@@ -221,7 +221,7 @@ La ejecución en Firefox permite validar que la eficiencia observada responde a 
 
 ## 13. Línea base Vanilla JS
 
-Faba incluye una implementación en Vanilla JavaScript (DOM directo) como línea base técnica. Esta no compite en el ranking, sino que define el costo mínimo observable impuesto por el navegador.
+    Faba incluye una implementación en Vanilla JavaScript (DOM directo) como línea base técnica. Esta no compite en el ranking, sino que define el costo mínimo observable impuesto por el navegador.
 ---
 
 ## 14. Índice de eficiencia relativo

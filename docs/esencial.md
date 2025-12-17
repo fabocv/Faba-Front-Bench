@@ -1,6 +1,6 @@
 # 🌿 Guía Esencial: Entendiendo el peso de la Web
 
-    Si no eres programador o experto en rendimiento, esta guía es para ti. Aquí explicamos qué hace 'Faba' usando conceptos de la vida diaria, porque la eficiencia digital nos afecta a todos.
+> Si no eres programador o experto en rendimiento, esta guía es para ti. Aquí explicamos qué hace 'Faba' usando conceptos de la vida diaria, porque la eficiencia digital nos afecta a todos.
 ---
 
 ### 1. La Web tiene un "peso" invisible
