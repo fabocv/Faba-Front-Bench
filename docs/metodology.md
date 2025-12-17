@@ -11,15 +11,34 @@ El objetivo no es certificar consumo energético absoluto, sino **comparar costo
  
 ---
 
-## 2. Tipo de testeo
+## 2. Alcance
+
+Faba mide exclusivamente el cold start de una aplicación web:
+
+- Primera carga.
+- Caché limpia.
+- Sin interacciones de usuario.
+- Sin dependencias de red externas.
+
+El objetivo es aislar el costo impuesto por el framework y su ecosistema base.
+
+### 2.1 Tipo de testeo
 
 - **Tipo**: Benchmark comparativo de rendimiento frontend.
 - **Nivel**: Aplicación completa (no micro-benchmark).
 - **Contexto**: Render inicial y estabilización del hilo principal.
 - **Enfoque**: Las métricas de red corresponden exclusivamente a la descarga inicial de recursos estáticos (JS, CSS, fuentes), no a tráfico dinámico de APIs.
 
+### 2.2 Limitaciones de Headless
+
+Aunque emplear Headless implica que en la app medida:
+
+- no representa GPU real,
+- no representa thermal throttling,
+- no representa móviles.
 
 
+>Asumo este trade-off consciente de usar hradless como baseline y adjudico los resultados de estas pruebas a un ambiente limitado y cerrado de rendimiento de dichas aplicaciones.
 ---
 
 ## 3. Limpieza metodológica
@@ -38,7 +57,7 @@ Esto reduce ruido, overhead artificial y sesgos introducidos por herramientas ex
 
 ## 4. Decisión arquitectónica clave
 
-### Medición distribuida y control pasivo
+### 4.1 Medición distribuida y control pasivo
 
 Cada aplicación evaluada:
 - Mide internamente su ejecución.
@@ -53,6 +72,14 @@ La aplicación controladora:
 
 El controlador **no mide rendimiento** ni ejecuta lógica dentro del sistema bajo prueba.
 
+### 4.2 Dataset
+
+- Dataset estático local (users.json)
+- Tamaño: 1000 registros
+- Estructura idéntica para todas las apps
+- Tipo de carga: Media (Medium Load)
+
+> El dataset de 1000 registros representa una carga media típica de aplicaciones de gestión o visualización de datos. Faba no evalúa escalabilidad asintótica ni complejidad algorítmica en esta versión (v1.x).
 ---
 
 ## 5. Ciclo de medición
@@ -75,12 +102,22 @@ Cada aplicación evaluada ejecuta una única medición por invocación y no reci
 > Nota: requestAnimationFrame no se utiliza como métrica temporal en este proyecto, sino como una señal de sincronización con el pipeline de render del navegador.
 ---
 
-### Aislamiento de iteraciones y caché
+### 5.1 Aislamiento de iteraciones y caché
 
 Cada iteración de medición se ejecuta en un entorno completamente limpio, sin reutilización de caché ni estado previo.
 
 Esto incluye la eliminación de caché HTTP, almacenamiento local, service workers y cualquier estado persistente del navegador.  
 El objetivo es medir la experiencia de un usuario que accede a la aplicación por primera vez (cold start), aislando el costo inicial del framework y su ecosistema base.
+
+### 5.2 Métricas medidas
+
+#### Consideraciones sobre memoria
+
+La métrica de memoria (performance.memory.usedJSHeapSize) se incluye solo como referencia secundaria y no forma parte del índice principal de eficiencia, debido a:
+
+- Dependencia de motor (solo Chromium).
+- Redondeo intencional por seguridad.
+- Interferencia del Garbage Collector.
 
 ---
 
@@ -138,15 +175,17 @@ Todas las métricas se obtienen mediante **APIs nativas del navegador**, sin dep
 | CSS Bundle Size | Peso total de CSS descargado | KB | Filtrado por tipo `link` |
 | FCP | Tiempo hasta primer contenido visible | ms | Performance Paint Timing |
 | LCP | Tiempo hasta mayor contenido visible | ms | Largest Contentful Paint API |
-| TTI* | Tiempo hasta interacción estable | ms | Derivado desde tareas largas + eventos |
+| FTTS | Tiempo hasta interacción estable | ms | Derivado desde tareas largas + eventos |
 | JS Execution Time | Tiempo total ejecutando JS | ms | Suma de ejecución de scripts |
 | Long Tasks Count | Bloqueos del main thread >50 ms | Cantidad | Long Tasks API |
 | Total Blocking Time | Tiempo total bloqueando el hilo principal | ms | Suma de long tasks |
 | Max Long Task | Mayor bloqueo individual | ms | Máximo valor observado |
-| Heap Used | Memoria JS utilizada post-render | MB | `performance.memory.usedJSHeapSize` (Chrome) |
+| Heap Used | Memoria JS utilizada post-render | MB | `performance.memory` (Chrome) |
 
 
-TTI* es una métrica operativa propia de Faba, inspirada en el concepto de Time To Interactive, pero no equivalente a la definición de Lighthouse.
+FTTS (Faba Time To Stability) Tiempo transcurrido desde el inicio de la aplicación hasta que el render inicial se completa y el hilo principal permanece libre de Long Tasks durante un umbral continuo de 300 ms.
+
+> Nota: TTS es una métrica propia de Faba y no es equivalente al TTI definido por Lighthouse.
 ---
 
 ## 10. Métricas derivadas
@@ -164,14 +203,35 @@ Estos indicadores permiten evaluar **escalabilidad y costo marginal**.
 
 ---
 
-## 11. Índice de eficiencia relativo
+## 11. Métricas derivadas
+
+### Ocupación del hilo principal
+
+La Main Thread Occupancy representa el porcentaje del tiempo total de medición durante el cual el hilo principal estuvo activo (scripting o rendering) frente a tiempo idle. Permite detectar saturación sostenida incluso sin Long Tasks individuales. 
+
+Main Thread Occupancy es una métrica diagnóstica avanzada.
+No participa en el cálculo del índice de eficiencia y no debe interpretarse como señal directa de costo energético.
+
+## 12. Navegadores y motores
+
+- Baseline oficial: Chromium (V8)
+- Validación opcional: Firefox (Gecko)
+
+La ejecución en Firefox permite validar que la eficiencia observada responde a decisiones arquitectónicas del framework y no a optimizaciones específicas de V8.
+
+## 13. Línea base Vanilla JS
+
+Faba incluye una implementación en Vanilla JavaScript (DOM directo) como línea base técnica. Esta no compite en el ranking, sino que define el costo mínimo observable impuesto por el navegador.
+---
+
+## 14. Índice de eficiencia relativo
 
 Se calcula un **índice compuesto y normalizado**, basado en métricas clave de red y ejecución.  
 El índice es **relativo al conjunto comparado** y se utiliza exclusivamente para facilitar análisis comparativos, no como medida absoluta de eficiencia energética.
 
 ---
 
-## 12. Qué no aborda esta metodología
+## 15. Qué no aborda esta metodología
 
 - Medición directa de consumo eléctrico.
 - Cálculo exacto de emisiones de CO₂.
@@ -189,7 +249,7 @@ El foco es **frontend, técnico, comparativo y reproducible**.
 
 ---
 
-## 13. Principio rector
+## 16. Principio rector
 
 > *Faba mide costos técnicos reales del frontend moderno utilizando prácticas estándar de benchmarking de sistemas, priorizando comparabilidad, transparencia y mínima interferencia.*
 
@@ -282,7 +342,7 @@ La normalización se realiza **por métrica**, de forma independiente.
 
 ### Cálculo del Relative Efficiency Index
 
-El **Relative Efficiency Index** es un índice compuesto y ponderado, calculado a partir de las métricas normalizadas.
+El **Relative Efficiency Index** es un índice compuesto y ponderado, calculado a partir de las métricas normalizadas. Se considera como un **índice comparativo, y no absoluto**, por lo que un valor bajo no implica mala performance, solo menor eficiencia relativa dentro del grupo medido, dicho de otras palabras, un framework con menor puntaje puede ser perfectamente adecuado en términos absolutos. 
 
 Pesos definidos:
 
@@ -290,6 +350,8 @@ Pesos definidos:
 - Tiempo de ejecución de JavaScript: 0.30
 - Total Blocking Time: 0.25
 - Número de requests: 0.15
+
+> Estos pesos por defectos representan un perfil promedio hipotético con futuros ajustes y perfiles alternativos
 
 Fórmula:
 ```
@@ -304,6 +366,11 @@ El resultado es un valor entre `0` y `1`, donde **un valor menor indica mayor ef
 
 Este índice **no representa eficiencia energética absoluta**.
 
+### Nota Editorial
+
+> La ponderación del índice prioriza el impacto del JavaScript (descarga y ejecución) por considerarlo el principal factor de costo computacional y energético en el frontend moderno. Esta decisión puede favorecer arquitecturas que minimizan el trabajo en el cliente y penalizar SPAs tradicionales, lo cual es consistente con el objetivo de eficiencia técnica del benchmark.
+
+> Diferentes contextos de uso podrían justificar ponderaciones distintas, lo cual queda fuera del alcance de esta versión.
 ---
 
 ### Métricas derivadas
@@ -349,13 +416,30 @@ El script de normalización **no**:
 
 ---
 
+## Limitaciones y sesgos conocidos
 
+### Enfoque en Cold Start
+- Faba mide exclusivamente el costo del primer acceso a una aplicación con caché limpia. No evalúa la eficiencia de navegación interna ni escenarios warm, lo que puede favorecer frameworks optimizados para cargas iniciales livianas y penalizar aquellos que optimizan interacciones posteriores.
+
+### Índice de eficiencia relativo
+- El Relative Efficiency Index es un indicador comparativo dentro del conjunto medido. Un puntaje bajo no implica bajo rendimiento absoluto, sino menor eficiencia relativa frente a otros frameworks del mismo experimento.
+
+### Entorno Headless
+- Las mediciones se realizan en navegadores headless para garantizar reproducibilidad y control. Este entorno no representa completamente el comportamiento de GPU, recolección de basura o restricciones térmicas presentes en dispositivos reales, especialmente móviles.
+
+### Ponderación de métricas
+- El índice compuesto utiliza pesos fijos documentados que representan un perfil de uso promedio. Diferentes contextos de usuario podrían priorizar métricas distintas (por ejemplo, bloqueo del hilo principal vs. tamaño de descarga).
+
+### Conteo de requests
+
+- El conteo de requests se utiliza como señal de complejidad de carga y gestión de recursos, no como estimación directa de latencia de red. En entornos HTTP/2+, su peso relativo podría ajustarse en versiones futuras.
 
 # Ejemplo de salida JSON
 ```
 {
   "meta": {
-    "benchmarkVersion": "1.0.0",
+    "benchmark": "faba",
+    "benchmarkVersion": "1.1.0",
     "framework": "react",
     "frameworkVersion": "18.3.0",
     "uiLibrary": "chakra-ui",
@@ -364,31 +448,30 @@ El script de normalización **no**:
     "buildMode": "production",
     "appVariant": "light",
     "runs": 20,
+    "coldStart": true,
     "runTimestamp": "2025-12-15T22:40:00Z"
   },
 
   "environment": {
-    "browser": "Chrome",
+    "browser": "Chromium",
     "browserVersion": "121.0",
+    "engine": "v8",
+    "mode": "headless",
     "platform": "Linux x86_64",
     "hardwareConcurrency": 8,
-    "deviceMemoryGB": 16,
-    "connection": {
-      "effectiveType": "3g",
-      "downlinkMbps": 1.5,
-      "rttMs": 300
-    }
+    "deviceMemoryGB": 16
   },
 
   "scenario": {
     "dataSource": "local-static-json",
-    "description": "dataset JSON local, estático y determinista, empaquetado con la aplicación",
-    "recordsRendered": 100,
+    "description": "Dataset JSON local, estático y determinista, empaquetado con la aplicación",
+    "recordsRendered": 1000,
     "layout": "grid-4-columns",
-    "measurementEndCondition": "initial-render-complete-and-no-long-tasks-for-300ms"
+    "measurementEndCondition": "initial-render-complete-and-main-thread-idle-for-300ms"
   },
 
   "network": {
+    "note": "Network metrics reflect bundle transfer only. No external network requests are performed.",
     "totalTransferredKB": {
       "mean": 342,
       "std": 18
@@ -415,10 +498,13 @@ El script de normalización **no**:
     "LCPms": {
       "mean": 1340,
       "std": 62
-    },
-    "TTIms": {
-      "mean": 1820,
-      "std": 95
+    }
+  },
+
+  "diagnostics": {
+    "mainThreadOccupancyPct": {
+      "mean": 67.4,
+      "std": 3.2
     }
   },
 
@@ -440,7 +526,7 @@ El script de normalización **no**:
         "mean": 92,
         "std": 8
       }
-    }
+    },
   },
 
   "memory": {
@@ -448,26 +534,36 @@ El script de normalización **no**:
       "mean": 46.2,
       "std": 3.1
     },
-    "note": "Memory API available only on Chromium-based browsers"
+    "note": "Memory metrics are secondary and available only on Chromium-based browsers"
   },
 
   "derivedMetrics": {
-    "jsPerRecordKB": 1.98,
-    "jsExecutionPerRecordMs": 4.12,
-    "requestsPerRecord": 0.26
+    "jsPerRecordKB": 0.198,
+    "jsExecutionPerRecordMs": 0.412,
+    "requestsPerRecord": 0.026
   },
 
   "summary": {
     "relativeEfficiencyIndex": {
       "value": 0.42,
       "method": "weighted-normalized-index",
-      "lowerIsBetter": true
+      "lowerIsBetter": true,
+      "scope": "comparative-only"
     },
     "statistics": {
       "runs": 20,
       "aggregation": "mean",
       "includesStdDeviation": true
     }
-  }
+  },
+
+  "limitations": [
+    "cold-start-only",
+    "headless-environment",
+    "no-internal-navigation-measured",
+    "memory-metric-chromium-only",
+    "relative-index-not-absolute"
+  ]
 }
+
 ```
