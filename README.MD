@@ -1,6 +1,16 @@
 
 # Faba — Benchmark headless de eficiencia front-end
 
+## Autor
+- Autor: Fabián Catalán
+- Github: https://github.com/fabocv
+- LinkedIn: https://www.linkedin.com/in/fkatv
+
+## Estado:
+En construcción del benchmark práctico (apps web) bajo la metodología Faba v1.1
+
+## ¿Qué es Faba?
+
 Faba es un proyecto de **benchmark comparativo** que evalúa la eficiencia técnica de aplicaciones web desarrolladas con distintos frameworks frontend modernos en su primera carga.
 
 Su objetivo es ayudar a diseñadores UI/UX y equipos de desarrollo a evaluar decisiones tecnológicas desde una perspectiva de costo digital —transferencia inicial de recursos, ejecución de JavaScript, carga de procesamiento y estabilidad del hilo principal— midiendo el costo real de acceder por primera vez a una aplicación web.
@@ -32,7 +42,7 @@ Faba ejecuta **aplicaciones equivalentes**, construidas con distintos frameworks
 
 - cuánto JavaScript descargan,
 - cuánto tiempo ejecutan código,
-- cuánto bloquean el hilo principal,
+- cuánto bloquean el hilo principal durante la carga inicial
 - cuántas solicitudes de red realizan,
 - cuán estables son durante el render inicial.
 

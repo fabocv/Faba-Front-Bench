@@ -1,4 +1,4 @@
-# Metodología de Medición y Benchmark – Faba
+# Metodología de Medición y Benchmark – Faba v1.1
 
 ## 1. Estrategia general
 
