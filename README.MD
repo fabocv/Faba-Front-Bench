@@ -4,9 +4,9 @@
 ## Autor
 - Autor: Fabián Catalán
 - Github: https://github.com/fabocv
-- LinkedIn: 
+- LinkedIn: https://www.linkedin.com/in/fkatv
 
-
+---
 
 **¿Qué tan pesada es tu aplicación para el planeta y para el usuario?** Faba mide el costo técnico y digital de los frameworks modernos en su primera carga.
 
