@@ -39,7 +39,7 @@ El rendimiento siempre ha importado, pero hoy el escenario ha cambiado:
 
 ## ¿Qué hace Faba exactamente? (Foco Único)
 
-Faba se especializa obsesivamente en el Cold Start (Carga en frío). No medimos navegación de larga duración, sino el Costo de Entrada.
+Faba se especializa en el Cold Start (Carga en frío). No medimos navegación de larga duración, sino el Costo de Entrada.
 
 Bajo un entorno **Headless controlado**, ejecutamos aplicaciones funcionalmente idénticas (1000 registros de datos estáticos) para auditar:
 
@@ -47,7 +47,7 @@ Bajo un entorno **Headless controlado**, ejecutamos aplicaciones funcionalmente 
 
 - **Esfuerzo (CPU):** Tiempo de ejecución de JS y saturación del hilo principal.
 
-- **Estabilidad (FTTS):** Nuestra métrica propia, el Faba Time To Stability, que detecta cuándo la app es realmente usable tras 300ms de calma total en el procesador.
+- **Estabilidad (FTTS):** Nuestra métrica propia, el *Faba Time To Stability*, que detecta cuándo la app es realmente usable tras 300ms de calma total en el procesador.
 
 
 ## Rigor, no Opinión

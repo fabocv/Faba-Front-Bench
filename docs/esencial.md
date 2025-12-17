@@ -1,6 +1,7 @@
 # 🌿 Guía Esencial: Entendiendo el peso de la Web
 
-> Si no eres programador o experto en rendimiento, esta guía es para ti. Aquí explicamos qué hace 'Faba' usando conceptos de la vida diaria, porque la eficiencia digital nos afecta a todos.
+ Si no eres programador o experto en rendimiento, esta guía es para ti. Aquí explicamos qué hace **Faba** usando conceptos de la vida diaria, porque la eficiencia digital nos afecta a todos.
+
 ---
 
 ### 1. La Web tiene un "peso" invisible
@@ -40,7 +41,8 @@ En nuestros reportes verás un número llamado Índice de Eficiencia Relativa:
 ---
 
 ### 5. Nuestra filosofía
-> **Faba** no busca decir que un framework es "malo" y otro "bueno". Buscamos que los equipos que crean tecnología tengan datos reales para elegir herramientas que sean responsables con los usuarios y con el medio ambiente.
+ **Faba** no busca decir que un framework es "malo" y otro "bueno". Buscamos que los equipos que crean tecnología tengan datos reales para elegir herramientas que sean responsables con los usuarios y con el medio ambiente.
+
 ---
 
 ### 💡 ¿Quieres saber más?
