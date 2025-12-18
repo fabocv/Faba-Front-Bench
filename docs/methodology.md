@@ -85,12 +85,12 @@ El controlador **no mide rendimiento** ni ejecuta lógica dentro del sistema baj
 
 | Framework	|baseline-light	| design-system-heavy |
 |-----------|---------------|---------------------|
+| VanillaJS | CSS plano / utilitario | Material Web Components|
 | React |	CSS plano / utilitario	 | Material UI (MUI) |
 | Angular |	CSS plano / utilitario | 	Angular Material |
-| Vue 3 |	CSS plano / utilitario	 | Vuetify |
+| Vue 3* |	CSS plano / utilitario	 | Vuetify |
 | Svelte |	CSS plano / utilitario | 	Svelte Material UI |
 | SolidJS* |	CSS plano / utilitario | 	Material Web Components |
-| VanillaJS* | CSS plano / utilitario | Material Web Components|
 
 > (*) Disponibles para la Versión 1.2
 ---
