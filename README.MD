@@ -13,7 +13,7 @@
 ## **📖 Elige tu nivel de profundidad:**
 - **¿Eres Diseñador, PM o curioso por la Sostenibilidad?** 👉 Lee nuestra [Guía Esencial (Sin tecnicismos)](docs/esencial.md)
 
-  Descubre cómo el "equipaje digital" afecta la batería de tus usuarios y al planeta.
+  Descubre cómo el "equipaje digital" afecta la batería de tus dispositivos y al planeta.
 
 - **¿Eres Desarrollador, Arquitecto o Auditor Técnico?** 👉 Explora la [Metodología Detallada](docs/methodology.md)
   
