@@ -28,7 +28,7 @@ Cada framework añade una capa de "costo de entrada" (descarga de JS, tiempo de 
 
 ---
 
-## ¿Por qué Faba ahora? (Ventana de Oportunidad)
+## ¿Por qué Faba ahora? 
 El rendimiento siempre ha importado, pero hoy el escenario ha cambiado:
 
 1) **Responsabilidad Ambiental**: La eficiencia digital es ahora un pilar de la sostenibilidad corporativa (Green UX).
@@ -37,7 +37,9 @@ El rendimiento siempre ha importado, pero hoy el escenario ha cambiado:
 
 3) **Madurez Técnica**: Por primera vez, existen alternativas reales (Astro, Svelte, Qwik, Vanilla) para cuestionar el statu quo de las SPAs pesadas.
 
-## ¿Qué hace Faba exactamente? (Foco Único)
+--- 
+
+## ¿Qué hace Faba exactamente? 
 
 Faba se especializa en el Cold Start (Carga en frío). No medimos navegación de larga duración, sino el Costo de Entrada.
 
@@ -49,8 +51,9 @@ Bajo un entorno **Headless controlado**, ejecutamos aplicaciones funcionalmente 
 
 - **Estabilidad (FTTS):** Nuestra métrica propia, el *Faba Time To Stability*, que detecta cuándo la app es realmente usable tras 300ms de calma total en el procesador.
 
+---
 
-## Rigor, no Opinión
+## Rigurosidad
 
 Para garantizar que los resultados sean indiscutibles, aplicamos:
 
@@ -58,8 +61,18 @@ Para garantizar que los resultados sean indiscutibles, aplicamos:
 - **Estabilidad Estadística**: Cada escenario se repite 20 veces ($M=20$) con limpieza total de caché entre turnos para eliminar el ruido.
 - **Línea Base Vanilla**: Comparamos todo contra una versión en Vanilla JS para conocer el costo mínimo inevitable del navegador.
 
+| Framework	|baseline-light	| design-system-heavy |
+|-----------|---------------|---------------------|
+| VanillaJS | CSS plano / utilitario | Material Web Components|
+| React |	CSS plano / utilitario	 | Material UI (MUI) |
+| Angular |	CSS plano / utilitario | 	Angular Material |
+| Vue 3* |	CSS plano / utilitario	 | Vuetify |
+| Svelte |	CSS plano / utilitario | 	Svelte Material UI |
+| SolidJS* |	CSS plano / utilitario | 	Material Web Components |
 
-## Encaje Cultural: De la Estética a la Ética
+> (*) Disponibles para la Versión 1.2
+
+## Medimos la primera impresión de los frameworks
 
 Si tu equipo ya invierte en accesibilidad y diseño responsable, Faba es el validador técnico de esos valores. No buscamos "frameworks ganadores", sino decisiones informadas.
 
