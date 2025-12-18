@@ -80,6 +80,19 @@ El controlador **no mide rendimiento** ni ejecuta lógica dentro del sistema baj
 - Tipo de carga: Media (Medium Load)
 
 > El dataset de 1000 registros representa una carga media típica de aplicaciones de gestión o visualización de datos. Faba no evalúa escalabilidad asintótica ni complejidad algorítmica en esta versión (v1.x).
+
+### 4.3 Tabla de Frameworks y testeos
+
+| Framework	|baseline-light	| design-system-heavy |
+|-----------|---------------|---------------------|
+| React |	CSS plano / utilitario	 | Material UI (MUI) |
+| Angular |	CSS plano / utilitario | 	Angular Material |
+| Vue 3 |	CSS plano / utilitario	 | Vuetify |
+| Svelte |	CSS plano / utilitario | 	Svelte Material UI |
+| SolidJS* |	CSS plano / utilitario | 	Material Web Components |
+| VanillaJS* | CSS plano / utilitario | Material Web Components|
+
+> (*) Disponibles para la Versión 1.2
 ---
 
 ## 5. Ciclo de medición
