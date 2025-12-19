@@ -6,10 +6,11 @@
 ### Fabián Catalán
 - Github: https://github.com/fabocv
 - LinkedIn: https://www.linkedin.com/in/fkatv
-
 ---
 
-**¿Por qué una aplicación construida con la misma lógica pesa el doble en un framework que en otro?** Faba no es solo un benchmark de velocidad; es una balanza para medir el costo digital, técnico y ambiental que tus decisiones de arquitectura le imponen al usuario final.
+**¿Por qué una aplicación construida con la misma lógica presenta variaciones sustanciales de peso entre frameworks?**
+
+Más allá de medir tiempos de carga, Faba caracteriza el impacto técnico del stack frontend en escenarios de carga en frío.
 
 ## **📖 Elige tu nivel de profundidad:**
 - **¿Eres Diseñador, PM o curioso por la Sostenibilidad?** 👉 Lee nuestra [Guía Esencial (Sin tecnicismos)](docs/esencial.md)
@@ -22,10 +23,16 @@
 
 ---
 
-## El Desafío: El "Sesgo de la Fibra Óptica"
-La mayoría de las aplicaciones modernas se diseñan en entornos ideales: procesadores potentes y conexiones ultrarrápidas. Esto oculta la Causa Raíz del problema: el Impuesto Tecnológico.
+## El Desafío: El "Sesgo de la Fibra Óptica" e Impuesto tecnológico
+La mayoría de las aplicaciones modernas se diseñan en condiciones perfectas: computadoras potentes y conexiones a internet ultrarrápidas. Esto crea un espejismo que nos impide ver la realidad del usuario común: el **Impuesto Tecnológico**.
 
-Cada framework añade una capa de "costo de entrada" (descarga de JS, tiempo de ejecución y bloqueo del hilo principal) que el usuario paga antes de poder interactuar. Faba hace visible este costo invisible.
+Cada herramienta que añadimos al desarrollo tiene un costo que el usuario paga con su tiempo y su batería antes de poder usar la app. **Faba** hace visible este costo invisible mediante tres pilares:
+
+1. La Espera (Carga): Lo que tarda en bajar la app a tu dispositivo.
+
+2. El Esfuerzo (Procesamiento): Qué tanto tiene que trabajar tu dispositivo para entender el código.
+
+3. La Frustración (Bloqueo): Esos segundos donde la pantalla se ve bien, pero no responde a tus clics.
 
 ---
 
