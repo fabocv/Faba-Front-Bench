@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>List of books</title>
+	<link type="text/css" rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div id="grey-modal-background" class="hidden"></div>
+
+<div class="bg"></div>
+<section class="card" id="header" >
+	<div class="header">
+        <h1>Faba  - Benchmark de eficiencia de frameworks web </h1>
+    </div>
+	<div data-container="books-table"></div>
+</section>
+
+<section id="panel" class="card baseline" >
+    <div type="button" id="div-angular-bsl-light" class="btn-testing">
+        <h3>Test Angular BaseLine Light</h3>
+        <button type="button" id="btn-angular-bsl-light">Testear Angular Light</button>
+        <div id="progreso-test" class="progreso-test">
+            <p>0 / 20</p> <progress value="0" max="100"></progress>
+        </div>
+        <div id="angular-light-results">
+            <div class="accordion">
+                <details>
+                    <summary>📦 Red</summary>
+                    <p>JS Bundle ...</p>
+                    <p>Transferencia total ...</p>
+                </details>
+
+                <details>
+                    <summary>⚡ Rendimiento</summary>
+                    <p>FCP (Pintado):</p>
+                    <p>FTTS (Estable):</p>
+                    <p>Estabilidad (σ):</p>
+                </details>
+
+                <details>
+                    <summary>💾 Memory</summary>
+                    <p>Heap Used:</p>
+                </details>
+            </div>
+        </div>
+        <div id="interpretation-box" class="interpretation-card hidden">
+            <h4>💡 Análisis del Experto</h4>
+            <p id="interpretation-text"></p>
+        </div>
+    </div>
+    <div type="button" id="div-angular-bsl-heavy" class="btn-testing">
+        <h3>Test Angular Material BaseLine</h3>
+        <button type="button"  id="btn-angular-bsl-heavy">Testear</button>
+        <div id="progreso-test-ang-heavy" class="progreso-test">
+            <p>0 / 20</p> <progress value="0" max="100"></progress>
+        </div>
+        <div id="angular-heavy-results">
+            <div class="accordion">
+                <details>
+                    <summary>📦 Red</summary>
+                    <p>JS Bundle ...</p>
+                    <p>Transferencia total ...</p>
+                </details>
+
+                <details>
+                    <summary>⚡ Rendimiento</summary>
+                    <p>FCP (Pintado):</p>
+                    <p>FTTS (Estable):</p>
+                    <p>Estabilidad (σ):</p>
+                </details>
+
+                <details>
+                    <summary>💾 Memory</summary>
+                    <p>Heap Used:</p>
+                </details>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/application.js"></script>
+</body>
+</html>
