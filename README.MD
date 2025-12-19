@@ -87,3 +87,82 @@ Si tu equipo ya invierte en accesibilidad y diseño responsable, Faba es el vali
 - 🧪 Apps evaluadas: carpeta `/apps`
 
 ---
+
+# Faba Benchmark v1.1 - Guía de Instalación y Uso
+
+Este monorepositorio contiene un entorno de pruebas automatizado para medir la eficiencia de renderizado en aplicaciones Angular (Versión Ligera vs. Angular Material).
+
+## 📋 Requisitos Previos
+Antes de comenzar, asegúrate de tener instalado:
+
+- Node.js (Versión 18 o superior recomendada)
+- Angular CLI (npm install -g @angular/cli)
+- Google Chrome (Puppeteer lo utilizará para las pruebas)
+
+## 🛠️ Instalación
+1. Clonar el proyecto y entrar en la raíz:
+
+```
+cd Faba-Front-Bench/
+```
+2. Instalar las dependencias globales del proyecto: Desde la raíz, instala el orquestador y las utilidades de limpieza:
+
+```
+npm install
+```
+
+3. Instalar dependencias de cada aplicación: Debes instalar los módulos de cada carpeta para que puedan ejecutarse:
+```
+# Angular Light
+cd apps/angular-test && npm install && cd ../..
+
+# Angular Heavy
+cd apps/angular-test-heavy && npm install && cd ../..
+
+# Controlador
+cd apps/controller-vanillajs && npm install && cd ../..
+```
+
+## Uso del Benchmark
+
+### 1. Iniciar el Entorno
+Para levantar las dos aplicaciones de Angular y el controlador simultáneamente, ejecuta en la raíz:
+
+```
+npm run start:all
+```
+- Angular Light: Se ejecutará en http://localhost:4201
+- Angular Heavy: Se ejecutará en http://localhost:4202
+- Controlador: Se abrirá automáticamente en http://localhost:3000
+
+### 2. Ejecutar las Pruebas
+1. Una vez abierto el panel en el navegador, asegúrate de no tener otras pestañas pesadas abiertas.
+
+2. Haz clic en "Testear Angular Light". El sistema realizará 20 iteraciones automáticas.
+
+3. Al finalizar, haz clic en "Testear Angular Material".
+
+4. Al obtener ambos resultados, se generará una Tabla Comparativa automática con el impacto porcentual.
+
+### 3. Exportar Resultados
+Haz clic en el botón "Descargar Reporte CSV" para obtener un archivo con todas las métricas de rendimiento (FCP, FTTS, Memoria y Bundle) para tu análisis de tesis.
+
+### Limpieza y Errores
+Si al intentar iniciar el proyecto recibes un error de "Puerto en uso" o quieres cerrar todo rápidamente, ejecuta:
+
+```
+npm run clean
+```
+
+## Metodología de Medición (Faba v1.1)
+- **Warm-up:** Se recomienda ignorar la primera corrida si el ruido ($\sigma$) es > 100ms.
+- **Muestreo:** Cada test consta de 20 muestras promediadas.
+- **Estabilidad ($\sigma$):** Se busca una desviación estándar inferior a ±50ms para considerar la prueba válida.
+
+## Pantallas v1.1
+
+![Benchmark](./docs/img/main1.1.png)
+Primer prototipo funcional de Faba - Angular test
+
+![Resultado Benchmark](./docs/img/tabla-angular1.1.png)
+Resultados comparativos de Angular sin design system (light) y con MUI (heavy)

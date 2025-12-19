@@ -1,0 +1,16 @@
+{
+  "name": "faba-benchmark-v1.1",
+  "version": "1.1.0",
+  "scripts": {
+    "start:all": "concurrently -n \"LIGHT,HEAVY,CTRL\" -c \"green,magenta,blue\" \"npm run start:light\" \"npm run start:heavy\" \"npm run start:ctrl\"",
+    "start:light": "cd apps/angular-test && ng serve --port 4201",
+    "start:heavy": "cd apps/angular-test-heavy && ng serve --port 4202",
+    "start:ctrl": "cd apps/controller-vanillajs && node server.js & sleep 2 && npx open-cli http://localhost:3000",
+    "clean": "npx kill-port 4201 4202 3000"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "kill-port": "^2.0.1",
+    "open-cli": "^7.2.0"
+  }
+}

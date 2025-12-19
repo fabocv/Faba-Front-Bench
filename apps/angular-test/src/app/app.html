@@ -1,17 +1,17 @@
-<!-- https://prismic.io/blog/css-background-effects -->
+
 <div class="bg"></div>
-<div class="bg bg2"></div>
-<div class="bg bg3"></div>
 <div class="content">
   <h1>Usuarios</h1>
 
   <div class="container">
-    @for( user of usuarios; track user.id) {
+    @for( user of usuarios(); let  i = $index ; track i + user.email) {
       <div class="card">
-        <img src="{{user.picture.thumbnail}}" alt="pic of {{user.email}}">
-        <h3>{{ user.name.title }} {{user.name.first}} </h3>
+        <div  class="avatar"> {{user.name.first[0]}}{{user.name.last[0]}}</div>
+        <div class="info">
+          <h3>{{ user.name.title }} {{user.name.first}} </h3>
         <p>{{user.email}}</p>
         <p>{{user.cell}}</p>
+        </div>
       </div>
     } @empty {
       <p>There are no items.</p>
