@@ -20,6 +20,7 @@
 <section class="nota" id="nota" >
     <h4>Importante:</h4>
     <ul>
+        <li>Considere la versión Light del framework sin librerías de Design System, solo CSS puro</li>
         <li class="info">Recomendamos tener solo esta página abierta y solo este navegador abierto.
         Suspenda descargas P2P, otras apps y descargas de navegador.</li>
         <li class="info">Solo ejecute una app a testear a la vez</li>
@@ -92,6 +93,28 @@
         </div>
     </div>
 </section>
+
+<section id="comparativa-final" class="card hidden">
+    <h3>📊 Tabla Comparativa: Light vs Material</h3>
+    <div class="">
+        <button type="button" id="btn-export-csv" class="btn-testing">
+            📥 Descargar Reporte CSV
+        </button>
+    </div>
+    <table class="benchmark-table">
+        <thead>
+            <tr>
+                <th>Métrica</th>
+                <th>Angular Light</th>
+                <th>Angular Material</th>
+                <th>Impacto (%)</th>
+            </tr>
+        </thead>
+        <tbody id="tbody-comparativa">
+            </tbody>
+    </table>
+</section>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/application.js"></script>
 </body>

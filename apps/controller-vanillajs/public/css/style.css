@@ -192,3 +192,37 @@ button:hover{
 	background: #e2e2e2;
 	cursor: pointer;
 }
+
+.benchmark-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: monospace;
+}
+
+.benchmark-table th, .benchmark-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.benchmark-table th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.impacto-negativo { color: #d32f2f; font-weight: bold; }
+.impacto-positivo { color: #388e3c; font-weight: bold; }
+
+.btn-csv2 {
+  text-align: center; margin-top: 20px;
+}
+
+.btn-testing2 {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

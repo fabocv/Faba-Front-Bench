@@ -1,5 +1,10 @@
 const socket = io();
 
+let globalResults = {
+    'angular-light': null,
+    'angular-heavy': null
+};
+
 const tests = {
     'angular-light': {
         port: 4201,
@@ -104,6 +109,13 @@ socket.on('test-complete', (data) => {
         console.log(data.metrics);
         toggleAllButtons(false); // Liberamos al finalizar
         renderResults(data.type, data.metrics);
+
+        globalResults[data.type] = data.metrics;
+    
+        // Si ambos (angular) ya terminaron, mostrar tabla
+        if (globalResults['angular-light'] && globalResults['angular-heavy']) {
+            generarTablaComparativa();
+        }
     }
 });
 
@@ -190,3 +202,65 @@ function getHumanInterpretation(m) {
 
     return html;
 }
+
+function generarTablaComparativa() {
+    const l = globalResults['angular-light'];
+    const h = globalResults['angular-heavy'];
+    const tbody = document.getElementById('tbody-comparativa');
+    document.getElementById('comparativa-final').classList.remove('hidden');
+
+    const metricsToCompare = [
+        { label: 'JS Bundle (KB)', valL: l.network.jsBundleKB, valH: h.network.jsBundleKB },
+        { label: 'FCP (ms)', valL: l.performance.FCPms, valH: h.performance.FCPms },
+        { label: 'FTTS (ms)', valL: l.performance.FTTSms, valH: h.performance.FTTSms },
+        { label: 'Memoria (MB)', valL: l.memory.jsHeapUsedMB, valH: h.memory.jsHeapUsedMB }
+    ];
+
+    tbody.innerHTML = metricsToCompare.map(m => {
+        const diff = ((m.valH - m.valL) / m.valL * 100).toFixed(1);
+        const colorClass = m.valH > m.valL ? 'impacto-negativo' : 'impacto-positivo';
+        const sign = m.valH > m.valL ? '+' : '';
+
+        return `
+            <tr>
+                <td>${m.label}</td>
+                <td>${m.valL.toFixed(2)}</td>
+                <td>${m.valH.toFixed(2)}</td>
+                <td class="${colorClass}">${sign}${diff}%</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+document.getElementById('btn-export-csv').addEventListener('click', () => {
+    if (!globalResults['angular-light'] || !globalResults['angular-heavy']) {
+        alert("Primero debes completar ambos tests.");
+        return;
+    }
+
+    const light = globalResults['angular-light'];
+    const heavy = globalResults['angular-heavy'];
+
+    // Cabeceras y Filas
+    const rows = [
+        ["Metrica", "Angular Light", "Angular Material", "Impacto %"],
+        ["JS Bundle (KB)", light.network.jsBundleKB.toFixed(2), heavy.network.jsBundleKB.toFixed(2), (((heavy.network.jsBundleKB - light.network.jsBundleKB)/light.network.jsBundleKB)*100).toFixed(1) + "%"],
+        ["FCP (ms)", light.performance.FCPms.toFixed(2), heavy.performance.FCPms.toFixed(2), (((heavy.performance.FCPms - light.performance.FCPms)/light.performance.FCPms)*100).toFixed(1) + "%"],
+        ["FTTS (ms)", light.performance.FTTSms.toFixed(2), heavy.performance.FTTSms.toFixed(2), (((heavy.performance.FTTSms - light.performance.FTTSms)/light.performance.FTTSms)*100).toFixed(1) + "%"],
+        ["Memoria Heap (MB)", light.memory.jsHeapUsedMB.toFixed(2), heavy.memory.jsHeapUsedMB.toFixed(2), (((heavy.memory.jsHeapUsedMB - light.memory.jsHeapUsedMB)/light.memory.jsHeapUsedMB)*100).toFixed(1) + "%"]
+    ];
+
+    // Convertir array a formato CSV
+    let csvContent = "data:text/csv;charset=utf-8," 
+        + rows.map(e => e.join(",")).join("\n");
+
+    // Crear link de descarga
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `faba_benchmark_${new Date().getTime()}.csv`);
+    document.body.appendChild(link);
+
+    link.click();
+    document.body.removeChild(link);
+});
