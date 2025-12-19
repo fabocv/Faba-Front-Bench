@@ -1,228 +1,246 @@
-html {
-  height:100%;
+:root {
+    --bg-app: #0f172a;        /* Azul muy oscuro (Slate 900) */
+    --bg-card: #1e293b;       /* Azul grisáceo (Slate 800) */
+    --bg-panel: #020617;      /* Casi negro para contrastes */
+    
+    --text-main: #e2e8f0;     /* Blanco suave (Slate 200) */
+    --text-muted: #94a3b8;    /* Gris texto secundario */
+    
+    --accent-primary: #3b82f6; /* Azul eléctrico */
+    --accent-success: #10b981; /* Verde semáforo */
+    --accent-danger: #ef4444;  /* Rojo semáforo */
+    --border-line: #334155;    /* Bordes sutiles */
+    
+    --radius: 12px;
+    --spacing-unit: 1.5rem;
+}
+
+/* 1. Reset y Estructura Global */
+html, body {
+    height: 100%;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 body {
-  margin:0;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", monospace; /* Fuente limpia + Monospace */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    line-height: 1.6;
 }
 
-
+/* Fondo decorativo sutil (Cyberpunk suave) */
 .bg {
-  background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
-  bottom:0;
-  left:-50%;
-  opacity:.5;
-  position:fixed;
-  right:-50%;
-  top:0;
-  z-index:-1;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 60%);
+    z-index: -1;
+    pointer-events: none;
 }
 
-body{
-	margin: 0;
-	font-size: 1.3em;
-	color: #444;
-	font-family: monospace;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1em;
-}
-
-.card {
-    background-color: #e2e2e2;
-    border-radius: 2em;
-    opacity: 0.9;
-    padding: 1.5em;
-    margin: 0.2em;
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-}
-
-.nota {
-    background: #e1f5fe;
-    border-left: 6px solid #0288d1;
-    padding: 1.5em;
-    margin: 1em 0;
-    border-radius: 8px;
-    width: 70%;
-}
-
-.nota h4 {
-    margin-top: 0;
-    color: #01579b;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.nota h4::before {
-    content: "⚠️";
-}
-
-.nota ul {
-    margin: 0;
-    padding-left: 1.5em;
-}
-
-.nota li {
-    font-size: 0.85em;
-    color: #0277bd;
-    margin-bottom: 8px;
-    line-height: 1.4;
+/* 2. Contenedor Principal (Solución al espaciado) */
+.baseline, .info, #comparativa-final {
+    width: 100%;
+    max-width: 1100px; /* Evita que se estire demasiado en pantallas gigantes */
+    margin-bottom: var(--spacing-unit);
 }
 
 .header {
+  width: 100%;
+  max-width: 1100px; 
+  margin-bottom: var(--spacing-unit);
+  display: inline;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    background: linear-gradient(90deg, #60a5fa, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: monospace;
+    margin-bottom: 1em;
+}
+
+/* 3. Tarjetas (Cards) */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-line);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    /* Flex interno para espaciado vertical consistente */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    gap: 1rem; 
 }
 
-.info {
-  font-size:large;
-  padding-left: 1em;
-  padding-right: 1em;
-}
-
+/* Grid para las dos apps lado a lado */
 .baseline {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1em;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Responsive automático */
+    gap: 2rem; /* Espaciado clave entre Light y Heavy */
 }
 
-@media (max-width: 1024px) {
-  .card {
-    width: 80%;
-    margin: auto;
-  }
+/* 4. Elementos de UI (Botones, Progreso, Inputs) */
+button {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
 }
 
-@media (max-width: 768px) {
-  .card {
-    width: 90%;
-    margin: auto;
-  }
-  .baseline {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
+button:hover {
+    background-color: var(--accent-primary);
+    color: white;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); /* Glow effect */
 }
 
-@media (max-width: 480px) {
-  .card {
-    width:100%;
-    margin: auto;
-  }
-  .baseline {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
+button:disabled {
+    border-color: var(--border-line);
+    color: var(--text-muted);
+    background: transparent;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
-.progreso-test {
-    display: inline-flex;
-    gap: 0.4em;
-    align-items: center;
-}
-
-/* Estilo para los resultados dentro del acordeón */
-.accordion details {
-    background: #252526;
-    margin-bottom: 5px;
+/* Barras de Progreso Neón */
+progress {
+    width: 100%;
+    height: 8px;
     border-radius: 4px;
-    border: 1px solid #3e3e42;
+    background: #0f172a;
+    border: 1px solid #334155;
+}
+progress::-webkit-progress-value {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-success));
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+}
+
+/* 5. Acordeones y Detalles */
+.accordion details {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-line);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .accordion summary {
-    padding: 12px;
-    color: #00d4ff; /* Azul tecnológico */
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 0.95em;
-    transition: background 0.2s;
+    padding: 1rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-weight: 500;
+    list-style: none; /* Ocultar triángulo default */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-
 .accordion summary:hover {
-    background: #2d2d30;
+    color: var(--text-main);
+    background: rgba(255,255,255,0.02);
+}
+.accordion summary::after {
+    content: '+'; 
+    font-size: 1.2rem;
+}
+.accordion details[open] summary::after {
+    content: '-';
 }
 
 .accordion p {
-    padding: 5px 20px;
+    padding: 1rem;
     margin: 0;
-    border-left: 2px solid #00d4ff;
-    background: #1e1e1e;
-}
-
-/* Animación para la barra de progreso */
-.progreso-test progress {
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
-}
-
-.interpretation-card {
-    margin-top: 15px;
-    padding: 1em;
-    background: #fff3cd; /* Amarillo suave tipo nota */
-    border-left: 5px solid #ffc107;
-    border-radius: 8px;
-    color: #856404;
-    font-size: 0.9em;
-    line-height: 1.4;
-}
-
-#interpretation-text p {
-    margin-bottom: 12px;
-    line-height: 1.5;
-}
-
-#interpretation-text strong {
-    color: #5c4b12; /* Un tono más oscuro para resaltar en el fondo amarillo */
-}
-
-button{
-	border: 1px solid #ccc;
-	background: #eee;
-	padding: 0.5em 0.5em;
-	margin-top: 1em;
-	border-radius: 0.2em;
+    border-top: 1px solid var(--border-line);
+    color: var(--text-main);
     font-family: monospace;
 }
-button:hover{
-	background: #e2e2e2;
-	cursor: pointer;
-}
 
+/* 6. Tabla Comparativa (Data Dashboard Style) */
 .benchmark-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    font-family: monospace;
-}
-
-.benchmark-table th, .benchmark-table td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-line);
+    margin-top: 1rem;
 }
 
 .benchmark-table th {
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--bg-panel);
+    color: var(--text-muted);
+    padding: 1rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border-line);
 }
 
-.impacto-negativo { color: #d32f2f; font-weight: bold; }
-.impacto-positivo { color: #388e3c; font-weight: bold; }
-
-.btn-csv2 {
-  text-align: center; margin-top: 20px;
+.benchmark-table td {
+    background-color: var(--bg-card);
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-family: monospace;
+    font-size: 1rem;
 }
 
-.btn-testing2 {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.benchmark-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Colores de Impacto */
+.impacto-negativo { color: var(--accent-danger); text-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+.impacto-positivo { color: var(--accent-success); text-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
+
+/* 7. Notas y Alertas */
+.nota {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    background: rgba(59, 130, 246, 0.1); /* Azul muy transparente */
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-left: 4px solid var(--accent-primary);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    color: var(--text-main);
+}
+.nota h4 {
+    color: var(--accent-primary);
+    margin-top: 0;
+}
+.nota li {
+    color: var(--text-muted);
+}
+
+/* Media Queries para Móvil */
+@media (max-width: 768px) {
+    .baseline {
+        grid-template-columns: 1fr; /* Una columna en móvil */
+    }
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    .card {
+        padding: 1.5rem;
+    }
 }
