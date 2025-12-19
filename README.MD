@@ -1,5 +1,6 @@
 
-# Faba — Benchmark de Eficiencia Web
+# Faba — Benchmark: Comparativa de Frameworks y Eficiencia Digital. 
+> Cuantificando el impacto real del stack tecnológico en la inclusión digital y la sostenibilidad.
 
 ## Autor
 ### Fabián Catalán
@@ -28,14 +29,16 @@ Cada framework añade una capa de "costo de entrada" (descarga de JS, tiempo de 
 
 ---
 
-## ¿Por qué Faba ahora? 
+## ¿Cuál es el impacto del rendimiento cuando todo anda veloz? 
 El rendimiento siempre ha importado, pero hoy el escenario ha cambiado:
 
-1) **Responsabilidad Ambiental**: La eficiencia digital es ahora un pilar de la sostenibilidad corporativa (Green UX).
+1) **Responsabilidad Ambiental**: La eficiencia digital es ahora un pilar de la sostenibilidad corporativa (Green UX). Un código optimizado reduce el consumo energético de los centros de datos y dispositivos móviles.
 
-2) **Saturación de Dispositivos**: El hardware de gama media/baja ya no puede seguir el ritmo del crecimiento exponencial del JavaScript.
+2) **Inclusión Digital**: El hardware de gama media/baja ya no puede seguir el ritmo del crecimiento exponencial del JavaScript, así lo señala Según Alex Rusell en [*The State of the Web*](https://infrequently.org/2021/03/the-performance-inequality-gap/). Por otro lado, la reducción en milisegundos del renderizado aumenta las tasas de conversión en países en desarrollo, según [*WPO Stats*](https://wpostats.com/), un ejemplo de lo anterior es Pinterest, que redujo el tiempo de espera en un 40% y aumentó sus ingresos publicitarios en un 44%. Esto prueba que el hardware lento "expulsa" a los usuarios de la economía digital si la web es pesada. El rendimiento no es un lujo, es una condición necesaria para la inclusión digital en un mercado global diverso
 
-3) **Madurez Técnica**: Por primera vez, existen alternativas reales (Astro, Svelte, Qwik, Vanilla) para cuestionar el statu quo de las SPAs pesadas.
+3) **Impuesto del tiempo de ejecución** El tamaño del bundle (js comprimido) es engañoso, pues la experiencia de usuario (la espera) es el parseo y la compilación del mismo. EN hardware de gama media-baja es linealmente más lento, creando barreras de acceso ([The Cost of JavaScript - V8 Blog / Andy Osmani](https://v8.dev/blog/cost-of-javascript-2019)).
+
+4) **Madurez Técnica**: Existen alternativas reales (Astro, Svelte, Qwik, Vanilla) que se consideran ligeras y nuevas vs. los frameworks más maduros 'tradicionales de la industria'. ¿habrá diferencia de rendimiento considerable antes de escoger un stack para desarrollar aplicaciones web eficientes?. Misko Hevery, creador de Angular, ahora en Qwik; explica que el modelo tradicional de frameworks está 'roto' para la web moderna porque obliga a ejecutar el mismo código dos veces (server y cliente). Este proyecto busca cuantificar ese 'impuesto de hidratación' comparando implementaciones reales. Puedes leer más en [Resumability vs Hydration By Miško Hevery](https://www.builder.io/blog/resumability-vs-hydration). 
 
 --- 
 
@@ -79,6 +82,18 @@ Si tu equipo ya invierte en accesibilidad y diseño responsable, Faba es el vali
 *"Faba mide costos técnicos reales del frontend moderno utilizando prácticas estándar de benchmarking de sistemas, priorizando comparabilidad y transparencia."*
 
 ---
+
+## Reflexión: El Rendimiento como Compromiso Social
+
+Faba es una herramienta diseñada para construir una web sustentable (que consume menos recursos) y sostenible (que perdura en el tiempo).
+
+Es nuestro deber como ingenieros seleccionar stacks y librerías que colaboren con la **sustentabilidad energética**. Mediante la cuantificabilidad del costo de ejecución de nuestras aplicaciones, podemos garantizar la **sostenibilidad social** de las mismas. Esto se traduce en:
+
+- **Eficiencia Energética**: Reducir el tiempo de CPU (como el salto de 484ms a 721ms observado en nuestras pruebas) baja directamente el consumo de vatios por usuario.
+
+- **Perdurabilidad**: Apps que no fuerzan la obsolescencia programada del hardware de gama media y baja.
+
+- **Inclusión Digital**: Interfaces accesibles para todas y todos, independientemente de su capacidad adquisitiva o su ubicación geográfica.
 
 ## Documentación adicional
 
