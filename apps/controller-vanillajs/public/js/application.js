@@ -43,6 +43,20 @@ const tests = {
         results: document.getElementById('angular-heavy-results'),
         interBox: document.getElementById('interpretation-box-angular-mui'),
         interText: document.getElementById('interpretation-text-angular-mui')
+    },
+    'react-light': {
+        port: 3001, 
+        btn: document.getElementById('btn-react-light'), 
+        results: document.getElementById('react-light-results'),
+        progressP: document.querySelector('#progreso-test-react-light p'),
+        progressB: document.querySelector('#progreso-test-react-light progress')
+    },
+    'react-heavy': { 
+        port: 3002, 
+        btn: document.getElementById('btn-react-heavy'), 
+        results: document.getElementById('react-heavy-results'),
+        progressP: document.querySelector('#progreso-test-react-heavy p'),
+        progressB: document.querySelector('#progreso-test-react-heavy progress')
     }
 };
 
@@ -141,6 +155,8 @@ async function init() {
 // Ejecutar inmediatamente
 init();
 
+
+//debiera eliminarse este codigo
 if (btnLight) {
     btnLight.addEventListener('click', () => {
         btnLight.disabled = true;
@@ -310,6 +326,7 @@ function generateComparisonTable(framework) {
     
     // Títulos amigables para las métricas
     const metrics = [
+        { label: 'Estabilidad test(σ)', key: 'performance', subKey: 'stdDev' },
         { label: 'JS Bundle (KB)', key: 'network', subKey: 'jsBundleKB' },
         { label: 'FCP (ms)', key: 'performance', subKey: 'FCPms' },
         { label: 'FTTS (ms)', key: 'performance', subKey: 'FTTSms' },

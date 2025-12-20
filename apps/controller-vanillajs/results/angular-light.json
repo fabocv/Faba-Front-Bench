@@ -2,17 +2,17 @@
   "type": "angular-light",
   "metrics": {
     "network": {
-      "jsBundleKB": 1833.912109375,
-      "totalTransferredKB": 1849.3232421875
+      "jsBundleKB": 1834.185546875,
+      "totalTransferredKB": 1849.5966796875
     },
     "performance": {
-      "FCPms": 200.8,
-      "FTTSms": 563.9300000000745,
-      "stdDev": 277.66929088420056
+      "FCPms": 189.8,
+      "FTTSms": 537.410000000149,
+      "stdDev": 253.69941643565642
     },
     "memory": {
-      "jsHeapUsedMB": 9.03187961578369
+      "jsHeapUsedMB": 9.030996704101563
     }
   },
-  "timestamp": "2025-12-20T20:58:02.835Z"
+  "timestamp": "2025-12-20T23:22:29.716Z"
 }

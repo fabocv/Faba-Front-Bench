@@ -112,6 +112,94 @@
     </table>
 </section>
 
+<section id="panel2" class="card baseline" >
+    <div type="button" id="div-react-bsl-light" class="btn-testing">
+        <h3>Test React BaseLine Light</h3>
+        <button type="button" id="btn-react-light">Iniciar Test Light (Port 3001)</button>
+        <div id="progreso-test2" class="progreso-test">
+            <p>0 / 20</p> <progress value="0" max="100"></progress>
+        </div>
+        <div id="react-light-results">
+            <div class="accordion">
+                <details>
+                    <summary>📦 Red</summary>
+                    <p>JS Bundle ...</p>
+                    <p>Transferencia total ...</p>
+                </details>
+
+                <details>
+                    <summary>⚡ Rendimiento</summary>
+                    <p>FCP (Pintado):</p>
+                    <p>FTTS (Estable):</p>
+                    <p>Estabilidad (σ):</p>
+                </details>
+
+                <details>
+                    <summary>💾 Memory</summary>
+                    <p>Heap Used:</p>
+                </details>
+            </div>
+        </div>
+        <div id="interpretation-box2" class="interpretation-card hidden">
+            <h4>💡 Análisis del Experto</h4>
+            <p id="interpretation-text2"></p>
+        </div>
+    </div>
+    <div type="button" id="div-react-bsl-heavy" class="btn-testing">
+        <h3>Test React Material BaseLine</h3>
+        <button type="button"  id="btn-react-heavy">Iniciar Test Material (Port 3002)</button>
+        <div id="progreso-test-react-heavy" class="progreso-test">
+            <p>0 / 20</p> <progress value="0" max="100"></progress>
+        </div>
+        <div id="react-heavy-results">
+            <div class="accordion">
+                <details>
+                    <summary>📦 Red</summary>
+                    <p>JS Bundle ...</p>
+                    <p>Transferencia total ...</p>
+                </details>
+
+                <details>
+                    <summary>⚡ Rendimiento</summary>
+                    <p>FCP (Pintado):</p>
+                    <p>FTTS (Estable):</p>
+                    <p>Estabilidad (σ):</p>
+                </details>
+
+                <details>
+                    <summary>💾 Memory</summary>
+                    <p>Heap Used:</p>
+                </details>
+            </div>
+        </div>
+        <div id="interpretation-box-react-mui" class="interpretation-card hidden">
+            <h4>💡 Análisis del Experto</h4>
+            <p id="interpretation-text-react-mui"></p>
+        </div>
+    </div>
+</section>
+
+<section id="comparativa-final-react" class="card hidden">
+    <h3>React Tabla Comparativa: Light vs Material</h3>
+    <div class="">
+        <button type="button" id="btn-export-csv2" class="btn-testing">
+            📥 Descargar Reporte CSV
+        </button>
+    </div>
+    <table class="benchmark-table">
+        <thead>
+            <tr>
+                <th>Métrica</th>
+                <th>Base (Light)</th>
+                <th>Material</th>
+                <th>Impacto (%)</th>
+            </tr>
+        </thead>
+        <tbody id="tbody-comparativa-react">
+            </tbody>
+    </table>
+</section>
+
 <script src="/socket.io/socket.io.js"></script>
 <script defer src="js/application.js"></script>
 </body>

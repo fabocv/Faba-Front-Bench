@@ -1,0 +1,18 @@
+{
+  "type": "react-light",
+  "metrics": {
+    "network": {
+      "jsBundleKB": 1503.33203125,
+      "totalTransferredKB": 1505.0869140625
+    },
+    "performance": {
+      "FCPms": 186.4,
+      "FTTSms": 653.0900000000372,
+      "stdDev": 51.163853450703414
+    },
+    "memory": {
+      "jsHeapUsedMB": 19.536989879608154
+    }
+  },
+  "timestamp": "2025-12-20T22:44:53.026Z"
+}
