@@ -2,7 +2,27 @@ const socket = io();
 
 let globalResults = {
     'angular-light': null,
-    'angular-heavy': null
+    'angular-heavy': null,
+    'react-light': null,
+    'react-heavy': null
+};
+
+const state = {
+    results: {
+        angular: { light: null, heavy: null },
+        react: { light: null, heavy: null }
+    },
+    isTesting: false
+};
+
+const UI = {
+    updateProgress: (val) => { /* ... */ },
+    toggleButtons: (disabled) => { /* ... */ },
+    showComparison: () => {
+        const section = document.getElementById('comparativa-final');
+        section.classList.remove('hidden');
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
 };
 
 const tests = {
@@ -93,6 +113,9 @@ socket.on('test-progress', (data) => {
 
 socket.on('test-complete', (data) => {
     const config = tests[data.type];
+    const [framework, version] = data.type.split('-');
+    state.results[framework][version] = data.metrics;
+
     if (config) {
         const threshold = 150; // Umbral de estabilidad
         const sigma = data.metrics.performance.stdDev;
@@ -107,14 +130,15 @@ socket.on('test-complete', (data) => {
 
         config.btn.disabled = false;
         console.log(data.metrics);
-        toggleAllButtons(false); // Liberamos al finalizar
+        //toggleAllButtons(false); // Liberamos al finalizar
+        UI.toggleButtons(false);
         renderResults(data.type, data.metrics);
 
         globalResults[data.type] = data.metrics;
     
         // Si ambos (angular) ya terminaron, mostrar tabla
-        if (globalResults['angular-light'] && globalResults['angular-heavy']) {
-            generarTablaComparativa();
+        if (state.results[framework].light && state.results[framework].heavy) {
+            generateComparisonTable(framework);
         }
     }
 });
@@ -203,33 +227,46 @@ function getHumanInterpretation(m) {
     return html;
 }
 
-function generarTablaComparativa() {
-    const l = globalResults['angular-light'];
-    const h = globalResults['angular-heavy'];
+function generateComparisonTable(framework) {
+    const light = state.results[framework].light;
+    const heavy = state.results[framework].heavy;
     const tbody = document.getElementById('tbody-comparativa');
-    document.getElementById('comparativa-final').classList.remove('hidden');
-
-    const metricsToCompare = [
-        { label: 'JS Bundle (KB)', valL: l.network.jsBundleKB, valH: h.network.jsBundleKB },
-        { label: 'FCP (ms)', valL: l.performance.FCPms, valH: h.performance.FCPms },
-        { label: 'FTTS (ms)', valL: l.performance.FTTSms, valH: h.performance.FTTSms },
-        { label: 'Memoria (MB)', valL: l.memory.jsHeapUsedMB, valH: h.memory.jsHeapUsedMB }
+    
+    // Títulos amigables para las métricas
+    const metrics = [
+        { label: 'JS Bundle (KB)', key: 'network', subKey: 'jsBundleKB' },
+        { label: 'FCP (ms)', key: 'performance', subKey: 'FCPms' },
+        { label: 'FTTS (ms)', key: 'performance', subKey: 'FTTSms' },
+        { label: 'Memoria (MB)', key: 'memory', subKey: 'jsHeapUsedMB' }
     ];
 
-    tbody.innerHTML = metricsToCompare.map(m => {
-        const diff = ((m.valH - m.valL) / m.valL * 100).toFixed(1);
-        const colorClass = m.valH > m.valL ? 'impacto-negativo' : 'impacto-positivo';
-        const sign = m.valH > m.valL ? '+' : '';
+    const html = metrics.map(m => {
+        const valL = light[m.key][m.subKey];
+        const valH = heavy[m.key][m.subKey];
+        
+        // Cálculo de impacto porcentual
+        const diff = ((valH - valL) / valL * 100).toFixed(1);
+        const isNegative = valH > valL; // En rendimiento, más alto suele ser peor
+        const colorClass = isNegative ? 'impacto-negativo' : 'impacto-positivo';
+        const sign = isNegative ? '+' : '';
 
         return `
             <tr>
-                <td>${m.label}</td>
-                <td>${m.valL.toFixed(2)}</td>
-                <td>${m.valH.toFixed(2)}</td>
+                <td style="text-align: left; color: var(--text-muted)">${m.label}</td>
+                <td>${valL.toFixed(2)}</td>
+                <td>${valH.toFixed(2)}</td>
                 <td class="${colorClass}">${sign}${diff}%</td>
             </tr>
         `;
     }).join('');
+
+    tbody.innerHTML = html;
+    
+    // Actualizar el título de la tabla según el framework
+    document.querySelector('#comparativa-final h3').innerText = 
+        `📊 Comparativa: ${framework.toUpperCase()} (Light vs Heavy)`;
+    
+    UI.showComparison();
 }
 
 document.getElementById('btn-export-csv').addEventListener('click', () => {
