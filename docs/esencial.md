@@ -4,7 +4,7 @@ Si no eres programador, esta guía te ayudará a entender por qué las decisione
 ## El Problema: Los 4 Modelos de Logística (Couriers)
 Imagina que vendes **Sillas Gamer**. Para que tu negocio funcione, el cliente debe recibir la silla y poder usarla rápido. El **Framework** (la tecnología) es el courier que eliges para el envío:
 
--**Modelo Integral (SPA Tradicional)**: Envía la silla con todo el taller de ensamblaje y manuales de otros modelos "por si acaso". Es robusto, pero el paquete es enorme.
+- **Modelo Integral (SPA Tradicional)**: Envía la silla con todo el taller de ensamblaje y manuales de otros modelos "por si acaso". Es robusto, pero el paquete es enorme.
 
 - **Modelo Directo (Vanilla/Compilados)**: Envía solo lo esencial. El paquete es mínimo, pero requiere un trabajo más artesanal de tu parte.
 
@@ -45,5 +45,5 @@ Para leer nuestros resultados, solo necesitas entender estos tres conceptos clav
 
 ### 💡 ¿Quieres saber más?
 
-Si quieres ver los detalles técnicos y matemáticos, puedes leer nuestra [Metodología Completa.](methodology.md)
-Si quieres probar el test benchmark, puedes leer los pasos a seguir en el [README principal](../README.MD)
+- Si quieres ver los detalles técnicos y matemáticos, puedes leer nuestra [Metodología Completa.](methodology.md)
+- Si quieres probar el test benchmark, puedes leer los pasos a seguir en el [README principal](../README.MD)
