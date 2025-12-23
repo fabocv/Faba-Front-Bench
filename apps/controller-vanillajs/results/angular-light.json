@@ -1,0 +1,18 @@
+{
+  "type": "angular-light",
+  "metrics": {
+    "network": {
+      "jsBundleKB": 1834.185546875,
+      "totalTransferredKB": 1849.5966796875
+    },
+    "performance": {
+      "FCPms": 131.8,
+      "FTTSms": 485.23000000044703,
+      "stdDev": 42.26960018754236
+    },
+    "memory": {
+      "jsHeapUsedMB": 9.037618446350098
+    }
+  },
+  "timestamp": "2025-12-23T01:04:43.413Z"
+}
