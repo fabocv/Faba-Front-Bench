@@ -78,7 +78,6 @@ let isRunning = false;
 
 function toggleAllButtons(disabled) {
     const buttons = document.querySelectorAll('.btn'); 
-    console.log(buttons.length)
     
     buttons.forEach(btn => {
         btn.disabled = disabled;
@@ -101,7 +100,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 
 async function obtenerHistorialJson() {
-    console.log("📥 Obteniendo historial de resultados...");
     try {
         const response = await fetch('/api/last-results');
         const lastData = await response.json();
@@ -545,95 +543,8 @@ function renderResults(type, m, timestamp = null) {
     }
 }
 
-//OLD VERSION
-function getHumanInterpretation(m) {
-    let html = "";
-
-    // 1. Análisis de Velocidad (FTTS)
-    if (m.performance.FTTSms < 500) {
-        html += `<p>🚀 <strong>Rendimiento Instantáneo:</strong> La aplicación es excepcionalmente fluida. El usuario percibe una carga inmediata, lo que garantiza una retención máxima.</p>`;
-    } else if (m.performance.FTTSms < 1000) {
-        html += `<p>✅ <strong>Buen Rendimiento:</strong> La respuesta es rápida y cumple con los estándares modernos de usabilidad.</p>`;
-    } else {
-        html += `<p>⚠️ <strong>Carga Perceptible:</strong> El usuario nota una pequeña espera. Hay margen para optimizar el renderizado masivo.</p>`;
-    }
-
-    // 2. Análisis de Estabilidad (Sigma)
-    if (m.performance.stdDev < 50) {
-        html += `<p>💎 <strong>Consistencia de Élite:</strong> La variabilidad es mínima (σ=${m.performance.stdDev.toFixed(1)}ms), lo que indica que Angular gestiona los recursos de forma determinista y sin bloqueos.</p>`;
-    } else if (m.performance.stdDev > 150) {
-        html += `<p>🌪️ <strong>Inestabilidad Detectada:</strong> Se detectó ruido sistémico o picos de latencia durante las pruebas. Se recomienda cerrar otros procesos y repetir.</p>`;
-    } else {
-        html += `<p>⚖️ <strong>Estabilidad Normal:</strong> La variación es aceptable para un entorno de ejecución estándar.</p>`;
-    }
-
-    // 3. Análisis de Memoria
-    const memoryStatus = m.memory.jsHeapUsedMB < 15 ? "muy eficiente" : "moderada";
-    html += `<p>💾 <strong>Eficiencia de Memoria:</strong> El uso de <strong>${m.memory.jsHeapUsedMB.toFixed(1)} MB</strong> es ${memoryStatus} para procesar 1000 registros, demostrando un buen manejo del Garbage Collector.</p>`;
-
-    return html;
-}
-
-// OLD VERSION
-function checkAndGenerateTables() {
-    // Recorremos los frameworks definidos en nuestro estado
-    Object.keys(state.results).forEach(framework => {
-        const data = state.results[framework];
-        
-        // Verificamos si ambas pruebas ya existen en el estado (recuperadas o nuevas)
-        if (data.light && data.heavy) {
-            console.log(`[Faba] Generando tabla comparativa para: ${framework}`);
-            generateComparisonTable(framework);
-        }
-    });
-}
-
-//OLD VERSION
-function generateComparisonTable(framework) {
-    const light = state.results[framework].light;
-    const heavy = state.results[framework].heavy;
-    const tbody = document.getElementById('tbody-comparativa');
-    
-    // Títulos amigables para las métricas
-    const metrics = [
-        { label: 'Estabilidad test(σ)', key: 'performance', subKey: 'stdDev' },
-        { label: 'JS Bundle (KB)', key: 'network', subKey: 'jsBundleKB' },
-        { label: 'FCP (ms)', key: 'performance', subKey: 'FCPms' },
-        { label: 'FTTS (ms)', key: 'performance', subKey: 'FTTSms' },
-        { label: 'Memoria (MB)', key: 'memory', subKey: 'jsHeapUsedMB' }
-    ];
-
-    const html = metrics.map(m => {
-        const valL = light[m.key][m.subKey];
-        const valH = heavy[m.key][m.subKey];
-        
-        // Cálculo de impacto porcentual
-        const diff = ((valH - valL) / valL * 100).toFixed(1);
-        const isNegative = valH > valL; // En rendimiento, más alto suele ser peor
-        const colorClass = isNegative ? 'impacto-negativo' : 'impacto-positivo';
-        const sign = isNegative ? '+' : '';
-
-        return `
-            <tr>
-                <td style="text-align: left; color: var(--text-muted)">${m.label}</td>
-                <td>${valL.toFixed(2)}</td>
-                <td>${valH.toFixed(2)}</td>
-                <td class="${colorClass}">${sign}${diff}%</td>
-            </tr>
-        `;
-    }).join('');
-
-    tbody.innerHTML = html;
-    
-    // Actualizar el título de la tabla según el framework
-    document.querySelector('#comparativa-final h3').innerText = 
-        `📊 Comparativa: ${framework.toUpperCase()} (Light vs Heavy)`;
-    
-    UI.showComparison();
-}
 
 function formatTimestamp(dateValue) {
-    console.log(dateValue)
     if (!dateValue || dateValue === 'N/A') return 'N/A';
 
     // 1. Intentar crear el objeto Date

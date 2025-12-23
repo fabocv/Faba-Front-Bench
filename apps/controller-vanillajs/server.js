@@ -76,11 +76,11 @@ io.on('connection', (socket) => {
                     throw new Error("Seguridad: Solo se permiten pruebas en entornos locales.");
                 }
 
-                // 3. Navegamos a la URL de Angular (puerto 4200)
+                // 3. Navegamos a la URL del framework
                 try {
                     await page.goto(url, { waitUntil: 'networkidle0', timeout: 20000 });
                 } catch (e) {
-                    throw new Error(`No se pudo acceder a ${url}. ¿Está Angular corriendo?`);
+                    throw new Error(`No se pudo acceder a ${url}. ¿Está ${data.type} corriendo?`);
                 }
 
                 // 4. VALIDACIÓN DE HANDSHAKE ---
@@ -94,12 +94,12 @@ io.on('connection', (socket) => {
                         : "ERROR: No se detectó variable fabaAppType en la App";
                     throw new Error(errorMsg);
                 }
-                // 5. Esperamos a que el Harness de Angular termine
+                // 5. Esperamos a que el Harness del framework termine
                 // Error común: El Harness no carga o tarda demasiado
                 try {
                     await page.waitForFunction(() => window.fabaRawMetrics !== undefined, { timeout: 15000 });
                 } catch (e) {
-                    throw new Error("El Harness de auditoría no respondió. Revisa la consola de Angular.");
+                    throw new Error(`El Harness de auditoría no respondió. Revisa la consola de ${data.type}.`);
                 }
                 
                 const metrics = await page.evaluate(() => window.fabaRawMetrics);
