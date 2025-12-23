@@ -1,81 +1,5 @@
 const socket = io();
 
-STATE_FRW = ['NOT ALLOWED','TEST PENDING', 'TESTING [1/2]', 'TESTING [2/2]', 'SELECT', 'SELECTED', ]
-STATE_PILL = ['pill-not-allowed', 'pill-pending', 'pill-testing', 'pill-testing', 'pill-select', 'pill-selected']
-STATE_COMPARISON = {
-    fw1: null,
-    fw2: null
-} 
-
-let CURRENT_VERSUS_MODE = 'light'; // Por defecto comienza en Light
-
-const metricsConfig = [
-    { label: 'Estabilidad (σ)', key: 'performance', subKey: 'stdDev' },
-    { label: 'JS Bundle (KB)', key: 'network', subKey: 'jsBundleKB' },
-    { label: 'FCP (ms)', key: 'performance', subKey: 'FCPms' },
-    { label: 'FTTS (ms)', key: 'performance', subKey: 'FTTSms' },
-    { label: 'Memoria (MB)', key: 'memory', subKey: 'jsHeapUsedMB' }
-];
-
-FRAMEWORKS = {
-    UI: [
-        { 
-            id: 'angular', 
-            name: 'Angular', 
-            version: 'v21 / Zoneless', 
-            desc: 'CSS vs MUI',
-            color: '#3b82f6' 
-        },
-        { 
-            id: 'react', 
-            name: 'React', 
-            version: '18 / SWC', 
-            desc: 'DOM  vs MUI',
-            color: '#3b82f6' 
-        },
-        { 
-            id: 'vue', 
-            name: 'Vue.js', 
-            version: 'v3', 
-            desc: 'Reactivity API + Vuetify',
-            color: '#3b82f6' 
-        },
-    ],
-    state:
-    {
-        'angular': 
-            {
-                phase: 1,
-                light: null,
-                heavy: null,
-                lightPort: 4201,
-                heavyPort: 4202,
-                timestamp: null,
-            },
-        'react':
-            {
-                phase: 1,
-                light: null,
-                heavy: null,
-                lightPort: 3001,
-                heavyPort: 3002,
-                timestamp: null,
-            },
-        'vue':
-            {
-                phase: 0,
-                light: null,
-                heavy: null,
-                lightPort: 0,
-                heavyPort: 0,
-                timestamp: null,
-            },
-    }
-}
-
-
-let isRunning = false;
-
 function toggleAllButtons(disabled) {
     const buttons = document.querySelectorAll('.btn'); 
     
@@ -354,10 +278,6 @@ function updateCardUI(fwId) {
     // 1. Actualizar el PILL (Color y Texto)
     const pill = document.querySelector(`#card-${fwId} .status-pill`);
     if (pill) {
-        // Limpiamos clases de pill anteriores
-        //pill.className = `status-pill ${STATE_PILL[fwState.phase]}`;
-        //pill.innerText = STATE_FRW[fwState.phase];
-
         pill.className = `status-pill ${fwState.phase === 5 ? 'selected' : STATE_PILL[fwState.phase]}`;
         pill.innerText = fwState.phase === 5 ? `⚔️ ${fwId.toUpperCase()}` : STATE_FRW[fwState.phase];
     }
@@ -513,133 +433,6 @@ socket.on('disconnect', () => {
     alert("Servidor de control desconectado. Reinicia 'node server.js'.");
 });
 
-
-//OLD VERSION
-function renderResults(type, m, timestamp = null) {
-    if (!resultsDiv) return;
-
-    const config = tests[type];
-    if (!config || !config.results) return;
-    
-    // Formatear fecha si existe
-    const dateStr = timestamp 
-        ? new Date(timestamp).toLocaleString('es-CL', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' }) 
-        : 'Recién';
-
-    config.results.innerHTML = `
-        <div class="accordion">
-            <details open><summary>📦 Red</summary>
-                <p>JS Bundle: ${m.network.jsBundleKB.toFixed(2)} KB</p>
-                <p>Total Transferred: ${m.network.totalTransferredKB.toFixed(2)} KB</p>
-            </details>
-            <details open><summary>⚡ Rendimiento</summary>
-                <p>FCP: ${m.performance.FCPms.toFixed(2)} ms</p>
-                <p>FTTS: ${m.performance.FTTSms.toFixed(2)} ms</p>
-                <p>Estabilidad (σ): ±${m.performance.stdDev.toFixed(2)} ms</p>
-            </details>
-            <details open><summary>💾 Memoria</summary>
-                <p>Heap Used: ${m.memory.jsHeapUsedMB.toFixed(2)} MB</p>
-            </details>
-            <div class="result-footer" style="margin-top: 10px; font-size: 0.8em; color: #666; text-align: right; border-top: 1px solid #eee; padding-top: 5px;">
-                🕒 Test realizado: ${dateStr}
-            </div>
-        </div>
-    `;
-
-    // Inyectar interpretación humana
-    if (config.interBox && config.interText) {
-        config.interBox.classList.remove('hidden');
-        config.interText.innerHTML = getHumanInterpretation(m);
-    }
-}
-
-//OLD VERSION
-function getHumanInterpretation(m) {
-    let html = "";
-
-    // 1. Análisis de Velocidad (FTTS)
-    if (m.performance.FTTSms < 500) {
-        html += `<p>🚀 <strong>Rendimiento Instantáneo:</strong> La aplicación es excepcionalmente fluida. El usuario percibe una carga inmediata, lo que garantiza una retención máxima.</p>`;
-    } else if (m.performance.FTTSms < 1000) {
-        html += `<p>✅ <strong>Buen Rendimiento:</strong> La respuesta es rápida y cumple con los estándares modernos de usabilidad.</p>`;
-    } else {
-        html += `<p>⚠️ <strong>Carga Perceptible:</strong> El usuario nota una pequeña espera. Hay margen para optimizar el renderizado masivo.</p>`;
-    }
-
-    // 2. Análisis de Estabilidad (Sigma)
-    if (m.performance.stdDev < 50) {
-        html += `<p>💎 <strong>Consistencia de Élite:</strong> La variabilidad es mínima (σ=${m.performance.stdDev.toFixed(1)}ms), lo que indica que Angular gestiona los recursos de forma determinista y sin bloqueos.</p>`;
-    } else if (m.performance.stdDev > 150) {
-        html += `<p>🌪️ <strong>Inestabilidad Detectada:</strong> Se detectó ruido sistémico o picos de latencia durante las pruebas. Se recomienda cerrar otros procesos y repetir.</p>`;
-    } else {
-        html += `<p>⚖️ <strong>Estabilidad Normal:</strong> La variación es aceptable para un entorno de ejecución estándar.</p>`;
-    }
-
-    // 3. Análisis de Memoria
-    const memoryStatus = m.memory.jsHeapUsedMB < 15 ? "muy eficiente" : "moderada";
-    html += `<p>💾 <strong>Eficiencia de Memoria:</strong> El uso de <strong>${m.memory.jsHeapUsedMB.toFixed(1)} MB</strong> es ${memoryStatus} para procesar 1000 registros, demostrando un buen manejo del Garbage Collector.</p>`;
-
-    return html;
-}
-
-// OLD VERSION
-function checkAndGenerateTables() {
-    // Recorremos los frameworks definidos en nuestro estado
-    Object.keys(state.results).forEach(framework => {
-        const data = state.results[framework];
-        
-        // Verificamos si ambas pruebas ya existen en el estado (recuperadas o nuevas)
-        if (data.light && data.heavy) {
-            console.log(`[Faba] Generando tabla comparativa para: ${framework}`);
-            generateComparisonTable(framework);
-        }
-    });
-}
-
-//OLD VERSION
-function generateComparisonTable(framework) {
-    const light = state.results[framework].light;
-    const heavy = state.results[framework].heavy;
-    const tbody = document.getElementById('tbody-comparativa');
-    
-    // Títulos amigables para las métricas
-    const metrics = [
-        { label: 'Estabilidad test(σ)', key: 'performance', subKey: 'stdDev' },
-        { label: 'JS Bundle (KB)', key: 'network', subKey: 'jsBundleKB' },
-        { label: 'FCP (ms)', key: 'performance', subKey: 'FCPms' },
-        { label: 'FTTS (ms)', key: 'performance', subKey: 'FTTSms' },
-        { label: 'Memoria (MB)', key: 'memory', subKey: 'jsHeapUsedMB' }
-    ];
-
-    const html = metrics.map(m => {
-        const valL = light[m.key][m.subKey];
-        const valH = heavy[m.key][m.subKey];
-        
-        // Cálculo de impacto porcentual
-        const diff = ((valH - valL) / valL * 100).toFixed(1);
-        const isNegative = valH > valL; // En rendimiento, más alto suele ser peor
-        const colorClass = isNegative ? 'impacto-negativo' : 'impacto-positivo';
-        const sign = isNegative ? '+' : '';
-
-        return `
-            <tr>
-                <td style="text-align: left; color: var(--text-muted)">${m.label}</td>
-                <td>${valL.toFixed(2)}</td>
-                <td>${valH.toFixed(2)}</td>
-                <td class="${colorClass}">${sign}${diff}%</td>
-            </tr>
-        `;
-    }).join('');
-
-    tbody.innerHTML = html;
-    
-    // Actualizar el título de la tabla según el framework
-    document.querySelector('#comparativa-final h3').innerText = 
-        `📊 Comparativa: ${framework.toUpperCase()} (Light vs Heavy)`;
-    
-    UI.showComparison();
-}
-
 function formatTimestamp(dateValue) {
     console.log(dateValue)
     if (!dateValue || dateValue === 'N/A') return 'N/A';
@@ -666,21 +459,6 @@ function formatTimestamp(dateValue) {
     return `${d}-${m}-${y} ${h}:${min}:${s}`;
 }
 
-
-function openVersusReport() {
-    const section = document.getElementById('versus-section');
-    section.style.display = 'block';
-    
-    // Renderizamos el contenido que ya teníamos
-    renderVersusDashboard();
-
-    // Scroll suave hacia la sección
-    section.scrollIntoView({ behavior: 'smooth' });
-}
-
-function closeVersus() {
-    document.getElementById('versus-section').style.display = 'none';
-}
 
 function setVersusMode(mode) {
     CURRENT_VERSUS_MODE = mode;
@@ -761,77 +539,6 @@ function renderVersusDashboard() {
             }).render();
         });
     }, 50);
-}
-
-
-function renderVersusChart() {
-    const fw1Id = STATE_COMPARISON.fw1;
-    const fw2Id = STATE_COMPARISON.fw2;
-
-    // 1. Extraer métricas de interés (puedes usar tu metricsConfig)
-    const metricsLabels = ['FCP (ms)', 'Bundle (KB)', 'FTTS (ms)', 'Memory (MB)'];
-    
-    // Función helper para sacar los valores del estado
-    const getDataset = (fwId, variant) => {
-        const data = FRAMEWORKS.state[fwId][variant];
-        return [
-            data.performance.FCPms,
-            data.network.jsBundleKB,
-            data.performance.FTTSms,
-            data.memory.jsHeapUsedMB
-        ];
-    };
-
-    const options = {
-        series: [
-            { name: `${fw1Id.toUpperCase()} Light`, data: getDataset(fw1Id, 'light') },
-            { name: `${fw1Id.toUpperCase()} Heavy`, data: getDataset(fw1Id, 'heavy') },
-            { name: `${fw2Id.toUpperCase()} Light`, data: getDataset(fw2Id, 'light') },
-            { name: `${fw2Id.toUpperCase()} Heavy`, data: getDataset(fw2Id, 'heavy') }
-        ],
-        chart: {
-            type: 'bar',
-            height: 350,
-            background: 'transparent',
-            toolbar: { show: false }
-        },
-        // COLORES: Azul (L), Rojo (H), Cian (L), Naranja (H)
-        colors: ['#3b82f6', '#ef4444', '#06b6d4', '#f59e0b'],
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                columnWidth: '55%',
-                endingShape: 'rounded'
-            },
-        },
-        dataLabels: { enabled: false },
-        stroke: { show: true, width: 2, colors: ['transparent'] },
-        xaxis: {
-            categories: metricsLabels,
-            labels: { style: { colors: '#8b949e' } } // Color de texto dim
-        },
-        yaxis: {
-            title: { text: 'Valor Métrica', style: { color: '#8b949e' } },
-            labels: { style: { colors: '#8b949e' } }
-        },
-        legend: {
-            position: 'top',
-            labels: { colors: '#c9d1d9' } // Color de texto principal
-        },
-        fill: { opacity: 1 },
-        tooltip: {
-            theme: 'dark',
-            y: { formatter: (val) => val.toFixed(2) }
-        },
-        grid: { borderColor: '#030608' } // Color de los bordes de la UI
-    };
-
-    // Destruir gráfico previo si existe para evitar duplicados
-    const chartContainer = document.querySelector("#chart-versus");
-    chartContainer.innerHTML = ''; 
-    
-    const chart = new ApexCharts(chartContainer, options);
-    chart.render();
 }
 
 function closeModal() {
