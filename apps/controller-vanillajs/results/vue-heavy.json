@@ -1,18 +1,36 @@
 {
+  "fabaVersion": "1.2.0",
   "type": "vue-heavy",
+  "headless": true,
+  "timestamp": "2025-12-24T05:39:22.164Z",
+  "environment": {
+    "browser": "Chrome/143.0.7499.146",
+    "os": {
+      "platform": "linux",
+      "release": "6.15.11-2-MANJARO",
+      "arch": "x64",
+      "cpus": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz"
+    },
+    "networkSpeed": "1.35 Mbps",
+    "cpuModel": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
+    "logicalCores": 16,
+    "totalMemoryGB": 15,
+    "freeMemoryBeforeTest": 7,
+    "platform": "linux",
+    "isPluggedIn": true
+  },
   "metrics": {
     "network": {
-      "jsBundleKB": 715.3515625,
-      "totalTransferredKB": 717.1064453125
+      "jsBundleKB": 715.37890625,
+      "totalTransferredKB": 717.1337890625
     },
     "performance": {
-      "FCPms": 143.8,
-      "FTTSms": 385.4000000014901,
-      "stdDev": 71.68315701903184
+      "FCPms": 130.2,
+      "FTTSms": 347.8449999988079,
+      "stdDev": 48.443002336030716
     },
     "memory": {
-      "jsHeapUsedMB": 5.723487615585327
+      "jsHeapUsedMB": 5.737449073791504
     }
-  },
-  "timestamp": "2025-12-24T05:07:23.004Z"
+  }
 }

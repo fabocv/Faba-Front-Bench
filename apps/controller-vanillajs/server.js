@@ -10,6 +10,11 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+
+const FABAVERSION = "1.2.0";
+const os = require('os');
+
+
 app.use(express.static(path.join(__dirname, 'public'))); 
 
 app.get('/', (req, res) => {
@@ -55,6 +60,13 @@ io.on('connection', (socket) => {
         let results = [];
         let browser;
 
+        const osInfo = {
+            platform: os.platform(),     // win32, linux, darwin
+            release: os.release(),       // Versión del kernel/OS
+            arch: os.arch(),             // x64, arm
+            cpus: os.cpus()[0].model     // Modelo del procesador
+        };
+
         // Solo permitir localhost o 127.0.0.1
         if (!url.startsWith('http://localhost') && !url.startsWith('http://127.0.0.1')) {
             return socket.emit('test-error', { 
@@ -62,9 +74,14 @@ io.on('connection', (socket) => {
             });
         }
 
+        let networkSpeed = "Unknown";
+        let browserVersion = "Unknown";
+
         try {
             // 1. Lanzamos el navegador una sola vez para la sesión de pruebas
             browser = await puppeteer.launch({ headless: "new" });
+
+            browserVersion = await browser.version();
 
             for (let i = 0; i < iterations; i++) {
                 // 2. CREAMOS LA PÁGINA (Aquí estaba el error anterior)
@@ -79,6 +96,10 @@ io.on('connection', (socket) => {
                 // 3. Navegamos a la URL del framework
                 try {
                     await page.goto(url, { waitUntil: 'networkidle0', timeout: 20000 });
+                    networkSpeed = await page.evaluate(() => {
+                        // Intentamos obtener la velocidad estimada de la API de red del navegador
+                        return navigator.connection ? navigator.connection.downlink + " Mbps" : "N/A";
+                    });
                 } catch (e) {
                     throw new Error(`No se pudo acceder a ${url}. ¿Está ${data.type} corriendo?`);
                 }
@@ -119,10 +140,23 @@ io.on('connection', (socket) => {
             const finalMetrics = processMetrics(results);
 
             // CREAMOS EL OBJETO DE RESULTADO
-            const testResult = { 
-                type: data.type, 
-                metrics: finalMetrics, 
-                timestamp: new Date().toISOString() 
+            const testResult = {
+                fabaVersion: FABAVERSION,
+                type: data.type,
+                headless: true,
+                timestamp: new Date().toISOString(),
+                environment: {
+                    browser: await browser.version(),
+                    os: osInfo,
+                    networkSpeed: networkSpeed,
+                    cpuModel: os.cpus()[0].model,
+                    logicalCores: os.cpus().length,
+                    totalMemoryGB: Math.round(os.totalmem() / (1024 ** 3)),
+                    freeMemoryBeforeTest: Math.round(os.freemem() / (1024 ** 3)),
+                    platform: os.platform(), // 'win32', 'linux'
+                    isPluggedIn: true
+                },
+                metrics: finalMetrics
             };
 
             // 1. GUARDAR EN DISCO (Sobrescribir)
