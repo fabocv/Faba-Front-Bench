@@ -66,8 +66,8 @@ FRAMEWORKS = {
                 phase: 0,
                 light: null,
                 heavy: null,
-                lightPort: 0,
-                heavyPort: 0,
+                lightPort: 3003,
+                heavyPort: 3004,
                 timestamp: null,
             },
     }

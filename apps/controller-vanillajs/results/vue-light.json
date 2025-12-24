@@ -1,0 +1,18 @@
+{
+  "type": "vue-light",
+  "metrics": {
+    "network": {
+      "jsBundleKB": 717.19921875,
+      "totalTransferredKB": 718.9541015625
+    },
+    "performance": {
+      "FCPms": 127.4,
+      "FTTSms": 340.98499999940395,
+      "stdDev": 57.65829753558475
+    },
+    "memory": {
+      "jsHeapUsedMB": 5.292153644561767
+    }
+  },
+  "timestamp": "2025-12-24T05:07:01.545Z"
+}
