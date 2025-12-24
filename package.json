@@ -2,14 +2,16 @@
   "name": "faba-benchmark-v1.1",
   "version": "1.1.0",
   "scripts": {
-    "clean": "npx kill-port 3000 3001 3002 4201 4202",
+    "clean": "npx kill-port 3000 3001 3002 3003 3004 4201 4202",
+    "vue-light": "cd apps/vue-test-light && npx vite --port 3003 --strictPort --no-open",
+    "vue-heavy": "cd apps/vue-test-heavy && npx vite --port 3004 --strictPort --no-open",
     "start:ctrl": "cd apps/controller-vanillajs && node server.js & sleep 2 && npx open-cli http://localhost:3000",
     "angular-light": "cd apps/angular-test-light && ng serve --port 4201 --open false",
     "angular-heavy": "cd apps/angular-test-heavy && ng serve --port 4202 --open false",
     "react-light": "cd apps/react-swc-test-light && npx vite --port 3001 --strictPort",
     "react-heavy": "cd apps/react-swc-test-heavy && npx vite --port 3002 --strictPort",
     "react-test": "concurrently -n \"CTRL,R-L,R-H\" -c \"magenta,cyan,blue\" \"npm run start:ctrl\" \"npm run react-light\" \"npm run react-heavy\"",
-    "start:all": "npm run clean && concurrently -n \"npm run clean\" \"CTRL,A-L,A-H,R-L,R-H\" -c \"magenta,red,orange,cyan,blue\" \"npm run start:ctrl\" \"npm run angular-light\" \"npm run angular-heavy\" \"npm run react-light\" \"npm run react-heavy\""
+    "start:all": "npm run clean && concurrently -n \"CTRL,A-L,A-H,R-L,R-H,V-L,V-H\" -c \"magenta,red,orange,cyan,blue,green,emerald\" \"npm run start:ctrl\" \"npm run angular-light\" \"npm run angular-heavy\" \"npm run react-light\" \"npm run react-heavy\" \"npm run vue-light\" \"npm run vue-heavy\" \"npm run open:browser\""
   },
   "devDependencies": {
     "concurrently": "^8.2.0",

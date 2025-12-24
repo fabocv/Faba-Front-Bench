@@ -11,7 +11,9 @@ APPS=(
     "apps/angular-test-light"
     "apps/angular-test-heavy"
     "apps/react-swc-test-light"
-    "apps/react-swc-test-heavy"
+    "apps/react-swc-test-heavy",
+    "apps/vue-test-light",
+    "apps/vue-test-heavy",
     "apps/controller-vanillajs"
 )
 

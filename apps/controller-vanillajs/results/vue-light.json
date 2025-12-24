@@ -1,8 +1,8 @@
 {
   "fabaVersion": "1.2.0",
-  "type": "react-heavy",
+  "type": "vue-light",
   "headless": true,
-  "timestamp": "2025-12-24T05:38:26.085Z",
+  "timestamp": "2025-12-24T05:39:00.800Z",
   "environment": {
     "browser": "Chrome/143.0.7499.146",
     "os": {
@@ -11,7 +11,7 @@
       "arch": "x64",
       "cpus": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz"
     },
-    "networkSpeed": "1.6 Mbps",
+    "networkSpeed": "1.55 Mbps",
     "cpuModel": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
     "logicalCores": 16,
     "totalMemoryGB": 15,
@@ -21,16 +21,16 @@
   },
   "metrics": {
     "network": {
-      "jsBundleKB": 3382.380859375,
-      "totalTransferredKB": 3384.1357421875
+      "jsBundleKB": 717.19921875,
+      "totalTransferredKB": 718.9541015625
     },
     "performance": {
-      "FCPms": 204.4,
-      "FTTSms": 1074.554999997467,
-      "stdDev": 55.7493450631688
+      "FCPms": 128.4,
+      "FTTSms": 345.575,
+      "stdDev": 61.46121439773743
     },
     "memory": {
-      "jsHeapUsedMB": 45.138240814208984
+      "jsHeapUsedMB": 5.297777986526489
     }
   }
 }

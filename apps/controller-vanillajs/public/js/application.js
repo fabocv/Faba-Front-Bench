@@ -51,6 +51,7 @@ FRAMEWORKS = {
                 lightPort: 4201,
                 heavyPort: 4202,
                 timestamp: null,
+                environment: null,
             },
         'react':
             {
@@ -60,15 +61,17 @@ FRAMEWORKS = {
                 lightPort: 3001,
                 heavyPort: 3002,
                 timestamp: null,
+                environment: null,
             },
         'vue':
             {
-                phase: 0,
+                phase: 1,
                 light: null,
                 heavy: null,
-                lightPort: 0,
-                heavyPort: 0,
+                lightPort: 3003,
+                heavyPort: 3004,
                 timestamp: null,
+                environment: null,
             },
     }
 }
@@ -117,6 +120,8 @@ async function obtenerHistorialJson() {
                 FRAMEWORKS.state[framework].phase = light && heavy ? 4 : 1;
 
                 FRAMEWORKS.state[framework].timestamp = test.timestamp;
+
+                FRAMEWORKS.state[framework].environment = test.environment;
 
             });
 
@@ -223,10 +228,22 @@ function showComparison(fwId) {
     document.getElementById('versus-dashboard').innerHTML = '';
     document.getElementById('versus-scoreboard').innerHTML = '';
 
+    const env = data.environment;
+
     const tableHTML = `
         <div class="report-header">
             <h2><span style="color:var(--text-dim)">Performance Audit:</span> ${fwId.toUpperCase()}</h2>
             <p>Comparativa de escalabilidad entre versión base y carga pesada.</p>
+            
+            <div class="system-specs">
+                <span>💻 <strong>OS:</strong> ${env.platform} (${env.os.arch})</span> | 
+                <span>🚀 <strong>CPU:</strong> ${env.cpuModel}</span> | 
+                <span>🧠 <strong>RAM Total:</strong> ${env.totalMemoryGB}GB</span>
+            </div>
+            <div class="system-specs-secondary">
+                <span>🌐 <strong>Browser:</strong> ${env.browser}</span> | 
+                <span>📶 <strong>Net:</strong> ${env.networkSpeed}</span>
+            </div>
         </div>
         
         <div class="table-wrapper">
@@ -447,6 +464,7 @@ socket.on('test-complete', (data) => {
             // FIN DEL CICLO
             FRAMEWORKS.state[fwId].phase = 4;
             FRAMEWORKS.state[fwId].timestamp = data.timestamp
+            FRAMEWORKS.state[fwId].environment = data.environment;
             toggleAllButtons(false); 
             updateCardUI(fwId);
             updateTimestamp(fwId);
