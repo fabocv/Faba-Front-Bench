@@ -33,6 +33,8 @@ body {
     align-items: center;
     padding: 2rem 1rem;
     line-height: 1.6;
+    min-height: 100vh; /* Ocupa todo el alto de la pantalla */
+    margin: 0;
 }
 
 /* Fondo decorativo sutil (Cyberpunk suave) */
@@ -42,6 +44,14 @@ body {
     background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 60%);
     z-index: -1;
     pointer-events: none;
+}
+
+/* contenedor maestro */
+.container-align {
+    max-width: 1100px; 
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%; /* Margen de seguridad para móviles */
 }
 
 /* 2. Contenedor Principal (Solución al espaciado) */
@@ -217,14 +227,18 @@ progress::-webkit-progress-value {
 
 /* 7. Notas y Alertas */
 .nota {
+    max-width: 1100px;
+    box-sizing: border-box;
+    margin: 20px auto; /* Centrado horizontal */
     margin-top: 1em;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
     background: rgba(59, 130, 246, 0.1); /* Azul muy transparente */
     border: 1px solid rgba(59, 130, 246, 0.2);
     border-left: 4px solid var(--accent-primary);
     border-radius: var(--radius);
     padding: 1.5rem;
     color: var(--text-main);
+    box-sizing: border-box; /* Evita que el padding ensanche la caja */
 }
 .nota h4 {
     color: var(--accent-primary);
@@ -316,7 +330,9 @@ progress::-webkit-progress-value {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
-    width: 100%; max-width: 1100px;
+    width: 100%; 
+    max-width: 1100px;
+    margin: 0 auto 40px auto; /* Centrado horizontal */
 }
 
 .fw-card {
@@ -401,7 +417,7 @@ progress::-webkit-progress-value {
 
 .scoreboard {
     display: flex;
-    width: 55vw;
+    width: 100%;
     justify-content: center;
     align-items: center;
     gap: 40px;
@@ -536,16 +552,22 @@ progress::-webkit-progress-value {
 .metric-name { font-weight: 600; color: #e1e1e1; }
 
 
+/* 1. El Fondo (se expande al 100% del ancho de pantalla) */
 .versus-drawer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 40px;
-    padding: 30px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.2) 100%);
-    border-top: 2px solid var(--border);
-    border-radius: 20px 20px 0 0;
-    animation: slideUp 0.4s ease-out;
+    width: 100%;
+    margin-top: 60px;
+    padding: 60px 0; /* Padding vertical únicamente */
+    background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.3) 100%);
+    border-top: 1px solid var(--border);
+    animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. El Contenedor de Contenido (alineado con el resto) */
+.versus-content-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;    /* CENTRADO */
+    padding: 0 20px;   /* Margen de seguridad para móviles */
+    box-sizing: border-box;
 }
 
 @keyframes slideUp {
@@ -608,4 +630,120 @@ progress::-webkit-progress-value {
     background: var(--accent-blue);
     color: white;
     box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+main, .content-wrapper { 
+    flex: 1; /* Esto expande el contenido principal y empuja el footer al fondo */
+}
+
+.main-footer {
+    width: 100%;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    color: var(--text-dim, #888);
+    font-size: 0.85rem;
+}
+
+.version-tag {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #10b981;
+    font-weight: 500;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    background-color: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.pulse {
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.social-links {
+    display: flex;
+    gap: 12px;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    color: #888;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Hover Effects */
+.social-btn:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.social-btn.github:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+.social-btn.linkedin:hover {
+    color: #0077b5;
+    background: rgba(0, 119, 181, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 119, 181, 0.2);
+}
+
+.github-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.github-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+    color: #3b82f6;
 }
