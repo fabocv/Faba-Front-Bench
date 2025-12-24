@@ -1,0 +1,32 @@
+name: Faba CI - Quality Control
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x] # Probamos en las dos versiones más usadas
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install
+
+    # Aquí podrías añadir un script de test si lo tuvieras
+    # Por ahora, verificamos que el servidor de Node arranque sin errores
+    - name: Check Syntax / Lint
+      run: node --check server.js

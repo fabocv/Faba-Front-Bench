@@ -2,6 +2,7 @@
 # Faba — Benchmark: Comparativa de Frameworks y Eficiencia Digital. 
 > Cuantificando el impacto real del stack tecnológico en la inclusión digital y la sostenibilidad.
 
+![CI Status](https://github.com/fabocv/Faba-Front-Bench/actions/workflows/ci.yml/badge.svg)
 <p align="left">
   <img src="https://img.shields.io/badge/version-1.2.0--stable-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Security-Policy_Enabled-success?style=for-the-badge&logo=github-security" />
