@@ -5,11 +5,16 @@ const puppeteer = require('puppeteer');
 const path = require('path');
 
 const fs = require('fs');
+const RateLimit = require('express-rate-limit');
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+const lastResultsLimiter = RateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+});
 
 const FABAVERSION = "1.2.0";
 const os = require('os');
@@ -29,7 +34,7 @@ if (!fs.existsSync(resultsDir)) {
 }
 
 // 1. Ruta para que el Controlador recupere los últimos datos al cargar
-app.get('/api/last-results', (req, res) => {
+app.get('/api/last-results', lastResultsLimiter, (req, res) => {
     const directoryPath = path.join(__dirname, 'results');
     
     if (!fs.existsSync(directoryPath)) {
