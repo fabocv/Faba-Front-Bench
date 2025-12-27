@@ -27,7 +27,7 @@ export class App implements OnInit {
         
         // Usamos un pequeño delay o un microtask para asegurar que 
         // Angular haya terminado de volcar los 1000 usuarios al DOM
-        console.log('📊 Señal con datos detectada. Preparando auditoría...');
+        console.log('Señal con datos detectada. Preparando auditoría...');
       }
     });
 

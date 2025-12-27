@@ -54,8 +54,18 @@ body {
     width: 95%; /* Margen de seguridad para móviles */
 }
 
+.header-content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    display: block;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 /* 2. Contenedor Principal (Solución al espaciado) */
-.baseline, .info, #comparativa-final {
+.info {
     width: 100%;
     max-width: 1100px; /* Evita que se estire demasiado en pantallas gigantes */
     margin-bottom: var(--spacing-unit);
@@ -98,14 +108,6 @@ body {
     gap: 1rem; 
 }
 
-/* Grid para las dos apps lado a lado */
-.baseline {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Responsive automático */
-    gap: 2rem; /* Espaciado clave entre Light y Heavy */
-}
-
-/* 4. Elementos de UI (Botones, Progreso, Inputs) */
 button {
     background-color: var(--bg-panel);
     border: 1px solid var(--accent-primary);
@@ -147,105 +149,6 @@ progress::-webkit-progress-value {
     background: linear-gradient(90deg, var(--accent-primary), var(--accent-success));
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
-}
-
-/* 5. Acordeones y Detalles */
-.accordion details {
-    background: var(--bg-panel);
-    border: 1px solid var(--border-line);
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-}
-
-.accordion summary {
-    padding: 1rem;
-    cursor: pointer;
-    color: var(--text-muted);
-    font-weight: 500;
-    list-style: none; /* Ocultar triángulo default */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.accordion summary:hover {
-    color: var(--text-main);
-    background: rgba(255,255,255,0.02);
-}
-.accordion summary::after {
-    content: '+'; 
-    font-size: 1.2rem;
-}
-.accordion details[open] summary::after {
-    content: '-';
-}
-
-.accordion p {
-    padding: 1rem;
-    margin: 0;
-    border-top: 1px solid var(--border-line);
-    color: var(--text-main);
-    font-family: monospace;
-}
-
-/* 6. Tabla Comparativa (Data Dashboard Style) */
-.benchmark-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    overflow: hidden;
-    border-radius: var(--radius);
-    border: 1px solid var(--border-line);
-    margin-top: 1rem;
-}
-
-.benchmark-table th {
-    background-color: var(--bg-panel);
-    color: var(--text-muted);
-    padding: 1rem;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 1px solid var(--border-line);
-}
-
-.benchmark-table td {
-    background-color: var(--bg-card);
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    font-family: monospace;
-    font-size: 1rem;
-}
-
-.benchmark-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* Colores de Impacto */
-.impacto-negativo { color: var(--accent-danger); text-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
-.impacto-positivo { color: var(--accent-success); text-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
-
-/* 7. Notas y Alertas */
-.nota {
-    max-width: 1100px;
-    box-sizing: border-box;
-    margin: 20px auto; /* Centrado horizontal */
-    margin-top: 1em;
-    margin-bottom: 2em;
-    background: rgba(59, 130, 246, 0.1); /* Azul muy transparente */
-    border: 1px solid rgba(59, 130, 246, 0.2);
-    border-left: 4px solid var(--accent-primary);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    color: var(--text-main);
-    box-sizing: border-box; /* Evita que el padding ensanche la caja */
-}
-.nota h4 {
-    color: var(--accent-primary);
-    margin-top: 0;
-}
-.nota li {
-    color: var(--text-muted);
 }
 
 /* Media Queries para Móvil */
@@ -325,26 +228,6 @@ progress::-webkit-progress-value {
 .last-run { font-size: 0.84rem; color: var(--text-dim); margin-top: 1rem; margin-bottom: 1rem; }
 
 
-/* --- GRID SYSTEM --- */
-.framework-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-    width: 100%; 
-    max-width: 1100px;
-    margin: 0 auto 40px auto; /* Centrado horizontal */
-}
-
-.fw-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.5rem;
-    position: relative;
-    display: flex; flex-direction: column;
-    transition: transform 0.2s;
-}
-
 .running-status {
     animation: fadeIn 0.4s ease-in-out;
     margin-top: 10px;
@@ -354,14 +237,6 @@ progress::-webkit-progress-value {
     from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
-/* Efecto cuando la card está corriendo */
-.fw-card.running-active {
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 15px rgba(31, 111, 235, 0.1);
-}
-.fw-card.ready { border-color: var(--accent-green); }
-.fw-card:hover { transform: translateY(-2px); }
 
 .modal {
     display: none; position: fixed; top: 50%; left: 50%;
@@ -376,17 +251,6 @@ progress::-webkit-progress-value {
     width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 999;
 }
 
-/* Estilos de la tabla de reporte */
-.report-table {
-    width: 100%; border-collapse: collapse; margin-top: 20px;
-}
-.report-table th {
-    text-align: left; color: var(--text-dim); font-size: 0.8rem;
-    border-bottom: 1px solid var(--border); padding: 10px;
-}
-.report-table td {
-    padding: 12px 10px; border-bottom: 1px solid var(--border);
-}
 .text-red { color: #ff6b6b; font-weight: bold; }
 .text-green { color: #51cf66; font-weight: bold; }
 .btn-close {
@@ -401,23 +265,10 @@ progress::-webkit-progress-value {
     margin-top: 20px;
 }
 
-.chart-box {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 8px;
-    padding: 10px;
-    border: 1px solid var(--border);
-}
-
-/* Resaltado del título del ganador */
-.chart-box h4 {
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--text-dim);
-}
-
 .scoreboard {
     display: flex;
-    width: 100%;
+    margin-right: 20px;
+    margin-left: 20px;
     justify-content: center;
     align-items: center;
     gap: 40px;
@@ -448,38 +299,6 @@ progress::-webkit-progress-value {
 .score-vs {
     font-size: 1.2rem;
     color: var(--text-dim);
-    font-weight: bold;
-}
-
-.metrics-legend {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-    margin: 15px 0;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.02);
-    border-left: 4px solid var(--accent-blue);
-    border-radius: 4px;
-}
-
-.legend-item {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    line-height: 1.4;
-}
-
-.legend-item strong {
-    color: #fff;
-    font-weight: 600;
-}
-
-.glow-winner .score-number {
-    color: #10b981;
-    text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-}
-
-.glow-winner .score-name {
-    color: #10b981;
     font-weight: bold;
 }
 
@@ -555,11 +374,18 @@ progress::-webkit-progress-value {
 /* 1. El Fondo (se expande al 100% del ancho de pantalla) */
 .versus-drawer {
     width: 100%;
-    margin-top: 60px;
-    padding: 60px 0; /* Padding vertical únicamente */
+    border-radius: 2em;
+    margin: 10px 20px;
+    padding: 20px 20px; /* Padding vertical únicamente */
     background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.3) 100%);
     border-top: 1px solid var(--border);
     animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-color: #38bdf8;
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.6),
+    0 0 18px rgba(56, 189, 248, 0.5),
+    0 0 40px rgba(56, 189, 248, 0.35),
+    0 0 60px rgba(56, 189, 248, 0.15);
 }
 
 /* 2. El Contenedor de Contenido (alineado con el resto) */
@@ -766,3 +592,94 @@ main, .content-wrapper {
     padding-left: 8px;
     opacity: 0.8;
 }
+
+#versus-dashboard {
+    display: flex;
+    flex-direction: column; /* Asegura que se apilen uno sobre otro */
+    gap: 20px;
+    width: 100%;
+}
+
+
+/* Solo cuando la pantalla sea ancha (Desktop), pasamos a 2 columnas */
+@media (min-width: 992px) {
+    #versus-dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+.scoreboard-container {
+    flex-direction: column; /* Evita que los nombres choquen en el centro */
+    gap: 15px;
+}
+
+@media (min-width: 480px) {
+    .scoreboard-container {
+        flex-direction: row;
+    }
+}
+.framework-grid {
+    display: grid;
+    /* Usa auto-fill para que el navegador decida según el ancho disponible */
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)) !important; 
+    gap: 1.5rem;
+    padding: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Tablet: 2 columnas si hay al menos 768px */
+@media (min-width: 768px) {
+    .framework-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* Desktop: 3 columnas si hay al menos 1200px */
+@media (min-width: 1200px) {
+    .framework-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+.scoreboard-container {
+    display: flex;
+    flex-direction: column; /* Apila los nombres en móvil si es necesario */
+    align-items: center;
+    gap: 10px;
+}
+
+@media (min-width: 480px) {
+    .scoreboard-container {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}
+
+.fw-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    position: relative;
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between; /* Empuja el footer hacia abajo */
+    transition: transform 0.2s, border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 280px; /* Asegura altura consistente entre cards */
+}
+
+.fw-card:hover { 
+    transform: translateY(-2px);
+    border-color: #38bdf8;
+    box-shadow:
+        0 0 0 1px rgba(56, 189, 248, 0.6),
+        0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+.fw-card.ready { border-color: var(--accent-green); }
+.fw-card.running-active { border-color: var(--accent-blue); }
