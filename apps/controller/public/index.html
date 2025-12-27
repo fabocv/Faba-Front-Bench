@@ -18,7 +18,8 @@
 <main class="container-align">
 
     <section class="nota" id="nota">
-        <h4>⚠️ Technical Guidelines:</h4>
+        <h4>Experimental Setup &amp; Constraints</h4>
+        <p>To ensure consistent and reproducible results:</p>
         <ul>
             <li ><strong>Baseline setup:</strong> The 'Light' version uses vanilla CSS without external UI/Design libraries for a pure framework performance baseline.</li>
             <li ><strong>Isolation:</strong> For maximum accuracy, close all other browser tabs, background applications, and P2P/network-heavy downloads.</li>
@@ -60,17 +61,7 @@
     <section id="versus-section" class="versus-drawer" style="display: none;">
         <div class="versus-content-wrapper">
             <div class="versus-header">
-                <div class="header-content">
-                    <h2>⚔️ Comparison Arena</h2>
-                    <p>Head-to-head technical analysis between the selected frameworks.</p>
-                    <div class="versus-mode-selector">
-                        <span class="mode-label">Mode:</span>
-                        <div class="switch-group">
-                            <button type="button" id="btn-mode-light" class="mode-btn active" onclick="setVersusMode('light')">Light</button>
-                            <button type="button" id="btn-mode-heavy" class="mode-btn" onclick="setVersusMode('heavy')">Heavy</button>
-                        </div>
-                    </div>
-                </div>
+                <div class="header-content" id="header-content"> </div>
             </div>
 
             <div id="versus-scoreboard" class="scoreboard"></div>
@@ -114,18 +105,18 @@
     </div>
 </footer>
 
-<div class="overlay" id="overlay" onclick="closeModal()"></div>
+<div class="overlay" id="overlay"></div>
 
 <div class="modal" id="details-modal" style="width: 100%;">
     <div id="comparison-container"></div>
 
-    <div class="modal-footer" style="margin-top: 20px; text-align: right;">
-        <button type="button" class="btn btn-secondary" onclick="closeModal()" style="width: auto;">CLOSE</button>
+    <div class="modal-footer" id="close-modal-footer" style="margin-top: 20px; text-align: right;">
+        <button type="button" class="btn btn-secondary close-modal" style="width: auto;">CLOSE</button>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <script src="/socket.io/socket.io.js"></script>
-<script defer src="js/application.js"></script>
+<script defer src="js/main.js" type="module"></script>
 </body>
 </html>

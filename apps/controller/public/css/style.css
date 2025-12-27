@@ -54,6 +54,16 @@ body {
     width: 95%; /* Margen de seguridad para móviles */
 }
 
+.header-content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    display: block;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 /* 2. Contenedor Principal (Solución al espaciado) */
 .baseline, .info, #comparativa-final {
     width: 100%;
@@ -417,7 +427,8 @@ progress::-webkit-progress-value {
 
 .scoreboard {
     display: flex;
-    width: 100%;
+    margin-right: 20px;
+    margin-left: 20px;
     justify-content: center;
     align-items: center;
     gap: 40px;
@@ -555,11 +566,18 @@ progress::-webkit-progress-value {
 /* 1. El Fondo (se expande al 100% del ancho de pantalla) */
 .versus-drawer {
     width: 100%;
-    margin-top: 60px;
-    padding: 60px 0; /* Padding vertical únicamente */
+    border-radius: 2em;
+    margin: 10px 20px;
+    padding: 20px 20px; /* Padding vertical únicamente */
     background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.3) 100%);
     border-top: 1px solid var(--border);
     animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-color: #38bdf8;
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.6),
+    0 0 18px rgba(56, 189, 248, 0.5),
+    0 0 40px rgba(56, 189, 248, 0.35),
+    0 0 60px rgba(56, 189, 248, 0.15);
 }
 
 /* 2. El Contenedor de Contenido (alineado con el resto) */

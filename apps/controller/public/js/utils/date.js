@@ -1,52 +1,4 @@
-
-
-
-let isRunning = false;
-
-function toggleAllButtons(disabled) {
-    const buttons = document.querySelectorAll('.btn'); 
-    
-    buttons.forEach(btn => {
-        btn.disabled = disabled;
-        btn.style.opacity = disabled ? '0.4' : '1';
-        btn.style.cursor = disabled ? 'not-allowed' : 'pointer';
-        
-        // Evitamos que el usuario haga clic aunque el CSS falle
-        if (disabled) {
-            btn.style.pointerEvents = 'none';
-        } else {
-            btn.style.pointerEvents = 'auto';
-        }
-    });
-    isRunning = disabled;
-}
-
-window.addEventListener('DOMContentLoaded', async () => {
-    await obtenerHistorialJson();
-});
-
-
-
-
-
-
-
-
-
-
-
-function resetDatabase() {
-    if(confirm('¿Borrar todos los JSON de resultados?')) {
-        // fetch('/api/reset')
-        location.reload();
-    }
-}
-
-
-
-
-
-function formatTimestamp(dateValue) {
+export function formatTimestamp(dateValue) {
     if (!dateValue || dateValue === 'N/A') return 'N/A';
 
     // 1. Intentar crear el objeto Date
@@ -70,5 +22,3 @@ function formatTimestamp(dateValue) {
 
     return `${d}-${m}-${y} ${h}:${min}:${s}`;
 }
-
-
