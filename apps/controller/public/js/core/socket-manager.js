@@ -1,3 +1,4 @@
+import { hideProgressBarSection } from "./actions.js";
 import { state } from "./state.js";
 
 export const socket = io();
@@ -32,6 +33,10 @@ socket.on('test-complete', async (data) => {
     // Actualizar el State
     const nuevaFase = await state.updateMetrics(fwId, variant, data.metrics, data.timestamp, data.environment);
 
+    if (4 === nuevaFase) {
+        //si terminó, se esconde la seccion visual de progresion de tests
+        hideProgressBarSection(fwId, data.timestamp);
+    }
     // Notificar cambio de fase (esto actualizará la UI a "Testing [2/2]")
     window.dispatchEvent(new CustomEvent('state:updated', { 
         detail: { fwId, phase: nuevaFase } 
@@ -43,8 +48,6 @@ socket.on('test-complete', async (data) => {
         const port = frw.heavyPort;
         
         const nextType = `${fwId}-heavy`; 
-        
-        console.log(`🚀 Iniciando fase Heavy para ${fwId} en puerto ${port}`);
         
         socket.emit('start-test', { 
             url: `http://localhost:${port}`, 

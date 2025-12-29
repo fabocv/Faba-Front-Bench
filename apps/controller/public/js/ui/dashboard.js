@@ -32,7 +32,7 @@ export async function renderDashboard() {
                     
                     <div class="card-actions" id="actions-${fw.id}">
                         ${isReady 
-                            ? `<button class="btn btn-retest" >Re-Run test</button>
+                            ? `<button class="btn btn-retest" >Restart test</button>
                                 <button class="btn btn-compare" >Show Report</button>`
                             : `<button class="btn btn-run" >Run Test</button>`
                         }
@@ -88,7 +88,7 @@ export function updateCardUI(fwId) {
         const isReady = phaseData.phase === 4; // Fase SELECT / READY
         
         actionsContainer.innerHTML = isReady 
-            ? `<button class="btn btn-retest" >Re-Run test</button>
+            ? `<button class="btn btn-retest" >Restart test</button>
                <button class="btn btn-compare" >Show Report</button>`
             : phaseData.phase < 4 ?
                 `<button class="btn btn-run" >Run Test</button>`
@@ -175,3 +175,6 @@ window.addEventListener('test:progress', (e) => {
     }
 });
 
+window.addEventListener('test:complete', (e) => {
+
+});
