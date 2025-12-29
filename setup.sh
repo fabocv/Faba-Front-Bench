@@ -29,10 +29,25 @@ nvm alias default 'lts/*'
 NODE_VER=$(node -v)
 echo -e "${GREEN}✅ Usando Node.js $NODE_VER${NC}"
 
-# 2. DEFINIR RUTAS
+# 2.1 Limpiar caché de npm para evitar conflictos de versiones de Vite
+npm cache clean --force
+
+echo -e "${BLUE}📦 Instalando el runner en la raiz del proyecto"
+(npm install --no-audit --no-fund)
+echo -e "${GREEN}✅ Runner listo.${NC}"
+
+# 2.2 Instalación específica para Svelte/Vite
+APPS_VITE=("apps/svelte-test-light" "apps/svelte-test-heavy" "apps/vue-test-light" "apps/vue-test-heavy")
+for APP in "${APPS_VITE[@]}"
+do
+    if [ -d "$APP" ]; then
+        echo -e "${BLUE}⚡ Optimizando Vite en $APP...${NC}"
+        (cd "$APP" && npm install --save-dev vite)
+    fi
+done
+
+# 3. DEFINIR RUTAS
 APPS_EXISTENTES=(
-    "apps/vue-test-light"
-    "apps/vue-test-heavy"
     "apps/react-swc-test-light"
     "apps/react-swc-test-heavy"
     "apps/controller"
