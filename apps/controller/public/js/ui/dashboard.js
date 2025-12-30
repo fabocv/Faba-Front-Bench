@@ -143,7 +143,7 @@ export function setupUIIntent() {
     });
 }
 
-window.addEventListener('state:togglebuttons', (toggle) =>{
+window.addEventListener('state:togglebutton', (toggle) => {
     toggleAllButtons(toggle);
 });
 
@@ -175,6 +175,21 @@ window.addEventListener('test:progress', (e) => {
     }
 });
 
-window.addEventListener('test:complete', (e) => {
+/**
+ * Controla el estado de interacción global durante las iteraciones del benchmark.
+ * @param {boolean} isDisabled - Estado booleano para bloquear/desbloquear.
+ */
+function toggleAllButtons(isDisabled) {
+    // 1. Usamos un selector CSS combinado para obtener todos los botones en una sola pasada
+    const selectors = '.btn-retest, .btn-run, .btn-compare';
+    const buttons = document.querySelectorAll(selectors);
 
-});
+    // 2. Iteramos directamente sobre el NodeList
+    buttons.forEach(btn => {
+        // En JS, para atributos booleanos como 'disabled', es más limpio usar la propiedad directa
+        btn.disabled = isDisabled;
+        
+        // clase visual para feedback de "Inclusión Digital"
+        btn.classList.toggle('opacity-50', isDisabled);
+    });
+}
