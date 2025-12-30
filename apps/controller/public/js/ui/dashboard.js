@@ -32,7 +32,7 @@ export async function renderDashboard() {
                     
                     <div class="card-actions" id="actions-${fw.id}">
                         ${isReady 
-                            ? `<button class="btn btn-retest" >Re-Run test</button>
+                            ? `<button class="btn btn-retest" >Restart test</button>
                                 <button class="btn btn-compare" >Show Report</button>`
                             : `<button class="btn btn-run" >Run Test</button>`
                         }
@@ -88,7 +88,7 @@ export function updateCardUI(fwId) {
         const isReady = phaseData.phase === 4; // Fase SELECT / READY
         
         actionsContainer.innerHTML = isReady 
-            ? `<button class="btn btn-retest" >Re-Run test</button>
+            ? `<button class="btn btn-retest" >Restart test</button>
                <button class="btn btn-compare" >Show Report</button>`
             : phaseData.phase < 4 ?
                 `<button class="btn btn-run" >Run Test</button>`
@@ -143,7 +143,8 @@ export function setupUIIntent() {
     });
 }
 
-window.addEventListener('state:togglebuttons', (toggle) =>{
+window.addEventListener('state:togglebutton', (e) => {
+    const { toggle } = e.detail;
     toggleAllButtons(toggle);
 });
 
@@ -175,3 +176,17 @@ window.addEventListener('test:progress', (e) => {
     }
 });
 
+/**
+ * Controla el estado de interacción global durante las iteraciones del benchmark.
+ * @param {boolean} isDisabled - Estado booleano para bloquear/desbloquear.
+ */
+function toggleAllButtons(isDisabled) {
+    const allControls = document.querySelectorAll('.btn-retest, .btn-run, .btn-compare, .framework-select-checkbox');
+    
+    allControls.forEach(control => {
+        control.disabled = isDisabled;
+        // Opcional: Feedback visual de saturación de CPU
+        control.style.opacity = isDisabled ? "0.5" : "1";
+        control.style.cursor = isDisabled ? "not-allowed" : "pointer";
+    });
+}

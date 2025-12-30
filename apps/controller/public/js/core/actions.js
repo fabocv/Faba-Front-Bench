@@ -3,28 +3,42 @@ import { metricsConfig } from "../config/constants.js";
 import { openModal } from "../ui/modal.js";
 import { renderVersusDashboard } from "../ui/charts.js";
 import { socket } from "../core/socket-manager.js";
+import { formatTimestamp } from "../utils/date.js";
 
 window.seleccionarFrw = seleccionarFrw;
 
 export async function runCycle(fwId) {
+        
+    const frw = state.getFrameworkData(fwId);
+    frw.light = null;
+    frw.heavy = null;    
     state.toggleAllButtons(true);
     // 2. Ocultar la fecha del último test
     const dateDiv = document.getElementById(`date-${fwId}`);
-    dateDiv.style.display = 'none';
+    dateDiv.hidden = true;
 
     // 3. Mostrar la zona de progreso (Sacarle el hidden)
     const runContainer = document.getElementById(`run-test-${fwId}`);
     runContainer.removeAttribute('hidden');
-    
-    const frw = state.getFrameworkData(fwId);
+
     const port = frw.lightPort;
     const type = `${fwId}-light`;
     
-    frw.phase = 2;
+    
 
     socket.emit('start-test', { url: `http://localhost:${port}`, type: type });
-    await state.updateMetrics(fwId,type,null, null, null);
+    await state.updateMetrics(fwId,type,null, null, null, {phase: 2});
+}
 
+export function hideProgressBarSection(fwId, timestamp) {
+
+    const dateDiv = document.getElementById(`date-${fwId}`);
+    dateDiv.innerHTML = `Last Test: <strong>${formatTimestamp(timestamp)}</strong>`;
+    dateDiv.hidden = false;
+
+    const runContainer = document.getElementById(`run-test-${fwId}`);
+    runContainer.hidden = true;
+    runContainer.classList.add("fade-out");
 }
 
 

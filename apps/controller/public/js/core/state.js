@@ -34,7 +34,7 @@ class StateManager {
     }
 
     // --- SETTERS / ACTIONS ---
-    async updateMetrics(id, variant, metrics, timestamp, environment) {
+    async updateMetrics(id, variant, metrics, timestamp, environment, params = null) {
         const fw = this.#frameworksState[id];
         if (!fw) return;
 
@@ -46,9 +46,13 @@ class StateManager {
 
         if (fw.light && fw.heavy) {
             fw.phase = 4; // Fase 'SELECT'
-        } else if (fw.light || fw.heavy) {
-            fw.phase = 1; // O la fase que uses para "parcialmente completado"
+        } else if (fw.light && !fw.heavy) {
+            fw.phase = 3; // Fase  'TEST 2/2
+        } else {
+            fw.phase = 1
         }
+
+        if (params && params.phase) fw.phase = params.phase; // Si fase es 2 -> TEST 1/2
         
         return fw.phase;
     }
@@ -79,9 +83,9 @@ class StateManager {
     }
 
     toggleAllButtons(value) {
-        window.dispatchEvent(new CustomEvent('state:togglebutton'), {
-            toggle: value
-        });
+        window.dispatchEvent(new CustomEvent('state:togglebutton', {
+            detail: { toggle: value }
+        }));
     }
 }
 

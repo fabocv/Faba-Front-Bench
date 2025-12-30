@@ -1,3 +1,5 @@
+import { updateCardUI } from "../ui/dashboard.js";
+import { hideProgressBarSection } from "./actions.js";
 import { state } from "./state.js";
 
 export const socket = io();
@@ -28,6 +30,8 @@ socket.on('test-progress', (data) => {
 
 socket.on('test-complete', async (data) => {
     const [fwId, variant] = data.type.split('-'); 
+
+    
     
     // Actualizar el State
     const nuevaFase = await state.updateMetrics(fwId, variant, data.metrics, data.timestamp, data.environment);
@@ -44,13 +48,23 @@ socket.on('test-complete', async (data) => {
         
         const nextType = `${fwId}-heavy`; 
         
-        console.log(`🚀 Iniciando fase Heavy para ${fwId} en puerto ${port}`);
-        
+        state.toggleAllButtons(true);
+
         socket.emit('start-test', { 
             url: `http://localhost:${port}`, 
             type: nextType 
         });
     }
+
+    if (4 === nuevaFase) {
+        //si terminó, se esconde la seccion visual de progresion de tests
+        hideProgressBarSection(fwId, data.timestamp);
+        state.toggleAllButtons(false);
+        return;
+    }
+    
+
+    
 });
 
 // Escuchar errores críticos del servidor
@@ -58,7 +72,7 @@ socket.on('test-error', (data) => {
     // 1. Liberar botones globales inmediatamente via evento
     state.toggleAllButtons(false);
 
-    // 2. Intentar identificar qué framework falló para limpiar su UI
+    // 2. Intentar identificar qué framework falló para limpiar la UI
     let fwId = "";
     if (data.detectedType || data.requestedType) {
         const type = data.detectedType || data.requestedType;
@@ -76,11 +90,10 @@ socket.on('test-error', (data) => {
         }
     }
 
-    // 3. Lógica de re-dirección automática (Tu Feature de seguridad)
+    // 3. Lógica de re-dirección automática 
     if (data.detectedType && state.getFrameworkData(fwId)) {
         alert(`⚠️ ¡Error de selección! Detectamos '${data.detectedType}'. Re-intentando en el puerto correcto...`);
         
-        // Re-bloqueamos y disparamos
         state.toggleAllButtons(true);
         socket.emit('start-test', { 
             url: `http://localhost:${data.port}`, 

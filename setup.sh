@@ -71,11 +71,11 @@ APPS_ANGULAR=("apps/angular-test-light" "apps/angular-test-heavy")
 for APP in "${APPS_ANGULAR[@]}"
 do
     if [ -d "$APP" ]; then
-        echo -e "${BLUE}🅰️  Actualizando dependencias Angular en $APP...${NC}"
+        echo -e "${BLUE}🅰️  Instalando dependencias locales de Angular en $APP...${NC}"
         (cd "$APP" && npm install --no-audit)
     else
-        echo -e "${BLUE}✨ Generando nueva estructura Angular en $APP...${NC}"
-        # --yes evita el prompt de confirmación de npx
+        echo -e "${BLUE}✨ Generando Angular con npx (sin instalación global)...${NC}"
+        # --yes para saltar el prompt y @latest para asegurar compatibilidad con Node LTS
         npx --yes @angular/cli@latest new $(basename $APP) --directory=$APP --routing=true --style=css --skip-git --skip-install=false
     fi
 done
