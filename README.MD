@@ -27,10 +27,22 @@ Se han completado satisfactoriamente los tests de:
 > [!IMPORTANT]
 > **Nota de Versión:** El desarrollo de las implementaciones para **VanillaJS, SolidJS, Qwik y Astro** queda oficialmente **suspendido** hasta una futura versión 1.3. El proyecto entra en fase de mantenimiento estable en la v1.2.
 
+## Screenshots v1.2
+
+![principal](./docs/img/main1.2.png)
+
+![test corriendo v1.2](./docs/img/runtest1.2.png)
+
+![resumen de test v1.2](./docs/img/report1.2.png)
+
+
+![arena v1.2](./docs/img/comparison_arena1.2.png)
+
 ## 🚀 Instalación Rápida
-1. `npm install` (Raíz)
-2. `chmod +x setup.sh && ./setup.sh` (Instalar apps)
-3. `npm run start:all` (Lanzar Dashboard en puerto 3000)
+1. `chmod +x setup.sh && ./setup.sh`
+      - Instala automáticamente nvm con el último node/npm y prepara proyectos node. 
+2. `npm run start:all` 
+      - (Lanzar Dashboard en puerto 3000)
 
 ---
 *Faba: El rendimiento no es un lujo, es una condición necesaria para la inclusión digital.*
