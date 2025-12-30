@@ -4,8 +4,8 @@
   "scripts": {
     "clean": "npx kill-port 3000 3001 3002 3003 3004 3005 3006 4201 4202",
     "start:ctrl": "cd apps/controller && node server.js & sleep 2 && npx open-cli http://localhost:3000",
-    "angular-light": "cd apps/angular-test-light && ng serve --port 4201 --open false",
-    "angular-heavy": "cd apps/angular-test-heavy && ng serve --port 4202 --open false",
+    "angular-light": "cd apps/angular-test-light && npx ng serve --port 4201 --open false",
+    "angular-heavy": "cd apps/angular-test-heavy && npx ng serve --port 4202 --open false",
     "react-light": "cd apps/react-swc-test-light && npx vite --port 3001 --strictPort",
     "react-heavy": "cd apps/react-swc-test-heavy && npx vite --port 3002 --strictPort",
     "vue-light": "cd apps/vue-test-light && npx vite --port 3003 --strictPort --no-open",
@@ -13,7 +13,7 @@
     "svelte-light": "cd apps/svelte-test-light && npx vite --port 3005 --strictPort --no-open",
     "svelte-heavy": "cd apps/svelte-test-heavy && npx vite --port 3006 --strictPort --no-open",
     "react-test": "concurrently -n \"CTRL,R-L,R-H\" -c \"magenta,cyan,blue\" \"npm run start:ctrl\" \"npm run react-light\" \"npm run react-heavy\"",
-    "start:all": "npm run clean && concurrently -n \"CTRL,A-L,A-H,R-L,R-H,VUE-L,VUE-H,SVE-L,SVE-H\" -c \"magenta,red,orange,cyan,blue,green,emerald,gold,ivory\" \"npm run start:ctrl\" \"npm run angular-light\" \"npm run angular-heavy\" \"npm run react-light\" \"npm run react-heavy\" \"npm run vue-light\" \"npm run vue-heavy\" \"npm run svelte-light\" \"npm run svelte-heavy\" "
+    "start:all": "npm run clean && concurrently -k -n \"CTRL,A-L,A-H,R-L,R-H,VUE-L,VUE-H,SVE-L,SVE-H\" -c \"magenta,red,orange,cyan,blue,green,emerald,gold,ivory\" \"npm run start:ctrl\" \"npm run angular-light\" \"npm run angular-heavy\" \"npm run react-light\" \"npm run react-heavy\" \"npm run vue-light\" \"npm run vue-heavy\" \"npm run svelte-light\" \"npm run svelte-heavy\" "
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
