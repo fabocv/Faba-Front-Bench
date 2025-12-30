@@ -83,9 +83,9 @@ class StateManager {
     }
 
     toggleAllButtons(value) {
-        window.dispatchEvent(new CustomEvent('state:togglebutton'), {
-            toggle: value
-        });
+        window.dispatchEvent(new CustomEvent('state:togglebutton', {
+            detail: { toggle: value }
+        }));
     }
 }
 

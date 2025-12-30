@@ -143,7 +143,8 @@ export function setupUIIntent() {
     });
 }
 
-window.addEventListener('state:togglebutton', (toggle) => {
+window.addEventListener('state:togglebutton', (e) => {
+    const { toggle } = e.detail;
     toggleAllButtons(toggle);
 });
 
@@ -180,16 +181,12 @@ window.addEventListener('test:progress', (e) => {
  * @param {boolean} isDisabled - Estado booleano para bloquear/desbloquear.
  */
 function toggleAllButtons(isDisabled) {
-    // 1. Usamos un selector CSS combinado para obtener todos los botones en una sola pasada
-    const selectors = '.btn-retest, .btn-run, .btn-compare';
-    const buttons = document.querySelectorAll(selectors);
-
-    // 2. Iteramos directamente sobre el NodeList
-    buttons.forEach(btn => {
-        // En JS, para atributos booleanos como 'disabled', es más limpio usar la propiedad directa
-        btn.disabled = isDisabled;
-        
-        // clase visual para feedback de "Inclusión Digital"
-        btn.classList.toggle('opacity-50', isDisabled);
+    const allControls = document.querySelectorAll('.btn-retest, .btn-run, .btn-compare, .framework-select-checkbox');
+    
+    allControls.forEach(control => {
+        control.disabled = isDisabled;
+        // Opcional: Feedback visual de saturación de CPU
+        control.style.opacity = isDisabled ? "0.5" : "1";
+        control.style.cursor = isDisabled ? "not-allowed" : "pointer";
     });
 }
