@@ -24,6 +24,8 @@ const indexLimiter = RateLimit({
 const FABAVERSION = "1.2.0";
 const os = require('os');
 
+const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0';
 
 app.use(express.static(path.join(__dirname, 'public'))); 
 
@@ -221,4 +223,8 @@ function processMetrics(data) {
     };
 }
 
-server.listen(3000, () => console.log('🚀 Controlador Faba en http://localhost:3000'));
+server.listen(PORT, HOST, () => {
+  console.log(`Controlador activo en http://${HOST}:${PORT}`);
+});
+
+//server.listen(3000, () => console.log('🚀 Controlador Faba en http://localhost:3000'));

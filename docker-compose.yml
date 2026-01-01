@@ -1,0 +1,12 @@
+services:
+  faba-bench:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: faba-front-bench
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    restart: always
+    privileged: true
