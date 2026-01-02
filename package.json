@@ -3,6 +3,7 @@
   "version": "1.2.1",
   "scripts": {
     "clean": "npx kill-port 3000 3001 3002 3003 3004 3005 3006 4201 4202",
+    "start:ctrl4docker": "cd apps/controller && node server4docker.js & sleep 2",
     "start:ctrl": "cd apps/controller && node server.js & sleep 2 && npx open-cli http://localhost:3000",
     "angular-light": "cd apps/angular-test-light && npx ng serve --port 4201 --open false",
     "angular-heavy": "cd apps/angular-test-heavy && npx ng serve --port 4202 --open false",
@@ -12,8 +13,17 @@
     "vue-heavy": "cd apps/vue-test-heavy && npx vite --port 3004 --strictPort --no-open",
     "svelte-light": "cd apps/svelte-test-light && npx vite --port 3005 --strictPort --no-open",
     "svelte-heavy": "cd apps/svelte-test-heavy && npx vite --port 3006 --strictPort --no-open",
+    "angular-light2": "cd apps/angular-test-light && npx ng serve --port 4201 --host 0.0.0.0 --open false",
+    "angular-heavy2": "cd apps/angular-test-heavy && npx ng serve --port 4202 --host 0.0.0.0 --open false",
+    "react-light2": "cd apps/react-swc-test-light && npx vite --port 3001 --host 0.0.0.0 --strictPort",
+    "react-heavy2": "cd apps/react-swc-test-heavy && npx vite --port 3002 --host 0.0.0.0 --strictPort",
+    "vue-light2": "cd apps/vue-test-light && npx vite --port 3003 --host 0.0.0.0 --strictPort --no-open",
+    "vue-heavy2": "cd apps/vue-test-heavy && npx vite --port 3004 --host 0.0.0.0 --strictPort --no-open",
+    "svelte-light2": "cd apps/svelte-test-light && npx vite --port 3005 --host 0.0.0.0 --strictPort --no-open",
+    "svelte-heavy2": "cd apps/svelte-test-heavy && npx vite --port 3006 --host 0.0.0.0 --strictPort --no-open",
     "react-test": "concurrently -n \"CTRL,R-L,R-H\" -c \"magenta,cyan,blue\" \"npm run start:ctrl\" \"npm run react-light\" \"npm run react-heavy\"",
-    "start:all": "npm run clean && concurrently -k -n \"CTRL,A-L,A-H,R-L,R-H,VUE-L,VUE-H,SVE-L,SVE-H\" -c \"magenta,red,orange,cyan,blue,green,emerald,gold,ivory\" \"npm run start:ctrl\" \"npm run angular-light\" \"npm run angular-heavy\" \"npm run react-light\" \"npm run react-heavy\" \"npm run vue-light\" \"npm run vue-heavy\" \"npm run svelte-light\" \"npm run svelte-heavy\" "
+    "start:all": "npm run clean && concurrently -k -n \"CTRL,A-L,A-H,R-L,R-H,VUE-L,VUE-H,SVE-L,SVE-H\" -c \"magenta,red,orange,cyan,blue,green,emerald,gold,ivory\" \"npm run start:ctrl\" \"npm run angular-light\" \"npm run angular-heavy\" \"npm run react-light\" \"npm run react-heavy\" \"npm run vue-light\" \"npm run vue-heavy\" \"npm run svelte-light\" \"npm run svelte-heavy\" ",
+    "start:docker-all": "npm run clean && concurrently -k -n \"CTRL,A-L,A-H,R-L,R-H,VUE-L,VUE-H,SVE-L,SVE-H\" -c \"magenta,red,orange,cyan,blue,green,emerald,gold,ivory\" \"npm run start:ctrl4docker\" \"npm run angular-light2\" \"npm run angular-heavy2\" \"npm run react-light2\" \"npm run react-heavy2\" \"npm run vue-light2\" \"npm run vue-heavy2\" \"npm run svelte-light2\" \"npm run svelte-heavy2\" "
   },
   "devDependencies": {
     "concurrently": "^8.2.0",

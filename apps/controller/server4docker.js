@@ -4,6 +4,7 @@ const { Server } = require('socket.io');
 const puppeteer = require('puppeteer');
 const path = require('path');
 
+
 const fs = require('fs');
 const RateLimit = require('express-rate-limit');
 
@@ -24,7 +25,13 @@ const indexLimiter = RateLimit({
 const FABAVERSION = "1.2.4";
 const os = require('os');
 
+const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0';
+
 app.use(express.static(path.join(__dirname, 'public'))); 
+
+const cors = require('cors');
+app.use(cors());
 
 app.get('/', indexLimiter, (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
@@ -88,7 +95,13 @@ io.on('connection', (socket) => {
 
         try {
             // 1. Lanzamos el navegador una sola vez para la sesión de pruebas
-            browser = await puppeteer.launch({ headless: "new" });
+            browser = await puppeteer.launch({ headless: "new",
+                args: [
+                    '--no-sandbox', 
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage'
+                ]
+            });
 
             browserVersion = await browser.version();
 
@@ -220,4 +233,8 @@ function processMetrics(data) {
     };
 }
 
-server.listen(3000, () => console.log('🚀 Controlador Faba en http://localhost:3000'));
+server.listen(PORT, HOST, () => {
+  console.log(`Controlador activo en http://${HOST}:${PORT}`);
+});
+
+//server.listen(3000, () => console.log('🚀 Controlador Faba en http://localhost:3000'));
