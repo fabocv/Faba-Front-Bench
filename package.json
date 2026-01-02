@@ -1,6 +1,6 @@
 {
   "name": "faba-benchmark-v1.2",
-  "version": "1.2.1",
+  "version": "1.2.6",
   "scripts": {
     "clean": "npx kill-port 3000 3001 3002 3003 3004 3005 3006 4201 4202",
     "start:ctrl4docker": "cd apps/controller && node server4docker.js & sleep 2",
