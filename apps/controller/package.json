@@ -13,8 +13,8 @@
   "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1",
-    "puppeteer": "^24.33.1",
-    "socket.io": "^4.8.1",
+    "puppeteer": "^24.34.0",
+    "socket.io": "^4.8.3",
     "express-rate-limit": "^8.2.1"
   }
 }

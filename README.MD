@@ -39,7 +39,7 @@ Se han completado satisfactoriamente los tests de:
 ![arena v1.2](./docs/img/comparison_arena1.2.png)
 
 ## 🚀 Instalación Rápida
-1. `chmod +x setup.sh && ./setup.sh`
+1. `chmod +x setup.sh && source setup.sh`
       - Instala automáticamente nvm con el último node/npm y prepara proyectos node. 
 2. `npm run start:all` 
       - (Lanzar Dashboard en puerto 3000)

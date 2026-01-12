@@ -16,8 +16,8 @@
     "start:all": "npm run clean && concurrently -k -n \"CTRL,A-L,A-H,R-L,R-H,VUE-L,VUE-H,SVE-L,SVE-H\" -c \"magenta,red,orange,cyan,blue,green,emerald,gold,ivory\" \"npm run start:ctrl\" \"npm run angular-light\" \"npm run angular-heavy\" \"npm run react-light\" \"npm run react-heavy\" \"npm run vue-light\" \"npm run vue-heavy\" \"npm run svelte-light\" \"npm run svelte-heavy\" "
   },
   "devDependencies": {
-    "concurrently": "^8.2.0",
+    "concurrently": "^9.2.1",
     "kill-port": "^2.0.1",
-    "open-cli": "^7.2.0"
+    "open-cli": "^8.0.0"
   }
 }
