@@ -39,10 +39,16 @@ Se han completado satisfactoriamente los tests de:
 ![arena v1.2](./docs/img/comparison_arena1.2.png)
 
 ## 🚀 Instalación Rápida
-1. `chmod +x setup.sh && source setup.sh`
+1. Si tienes node, registra tu versión  (Ej: 20.10) porque el script siguiente **actualizará a la fuerza a la última versión lts** (24+).
+2. `chmod +x setup.sh && source setup.sh`
       - Instala automáticamente nvm con el último node/npm y prepara proyectos node. 
-2. `npm run start:all` 
+3. `npm run start:all` 
       - (Lanzar Dashboard en puerto 3000)
 
+> Si deseas volver a tu version de node ejecuta 
+```
+nvm install <tu_version_node_original>
+nvm alias default <tu_version_node_original>
+```
 ---
 *Faba: El rendimiento no es un lujo, es una condición necesaria para la inclusión digital.*
