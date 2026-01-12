@@ -10,9 +10,11 @@ window.seleccionarFrw = seleccionarFrw;
 export async function runCycle(fwId) {
         
     const frw = state.getFrameworkData(fwId);
+    state.setRunningTest(true);
     frw.light = null;
     frw.heavy = null;    
     state.toggleAllButtons(true);
+    
     
     const dateDiv = document.getElementById(`date-${fwId}`);
     dateDiv.hidden = true;
@@ -108,6 +110,15 @@ export function showComparison(fwId) {
 
 
 export function seleccionarFrw(fwId) {
+    if (state.getIsRunning()) {return;}
+    
+    const comp = state.getComparison();
+    const fws = [comp.fw1, comp.fw2];
+
+    if (comp.fw1 && comp.fw2 && !fws.includes(fwId)) {
+        alert("Deseleccione un framework para continuar")
+        return;
+    }
     const fwState = state.getFrameworkData(fwId);
 
     if (fwState.phase < 4) {

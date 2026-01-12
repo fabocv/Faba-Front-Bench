@@ -12,6 +12,8 @@ class StateManager {
     }
 
     // --- GETTERS ---
+
+    getIsRunning() { return this.#isRunning; }
     getVersusMode() { return this.#versusMode; }
 
     getFrameworkData(id) { return this.#frameworksState[id] || null; }
@@ -46,6 +48,7 @@ class StateManager {
 
         if (fw.light && fw.heavy) {
             fw.phase = 4; // Fase 'SELECT'
+            this.#isRunning = false;
         } else if (fw.light && !fw.heavy) {
             fw.phase = 3; // Fase  'TEST 2/2
         } else {
@@ -56,6 +59,9 @@ class StateManager {
         
         return fw.phase;
     }
+
+
+    setRunningTest( running ) { this.#isRunning = running;  }
     
 
     setPhase(id, newPhase) {
