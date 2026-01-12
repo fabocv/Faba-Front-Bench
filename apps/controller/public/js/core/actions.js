@@ -10,14 +10,15 @@ window.seleccionarFrw = seleccionarFrw;
 export async function runCycle(fwId) {
         
     const frw = state.getFrameworkData(fwId);
+    state.setRunningTest(true);
     frw.light = null;
     frw.heavy = null;    
     state.toggleAllButtons(true);
-    // 2. Ocultar la fecha del último test
+    
+    
     const dateDiv = document.getElementById(`date-${fwId}`);
     dateDiv.hidden = true;
 
-    // 3. Mostrar la zona de progreso (Sacarle el hidden)
     const runContainer = document.getElementById(`run-test-${fwId}`);
     runContainer.removeAttribute('hidden');
 
@@ -109,9 +110,17 @@ export function showComparison(fwId) {
 
 
 export function seleccionarFrw(fwId) {
+    if (state.getIsRunning()) {return;}
+    
+    const comp = state.getComparison();
+    const fws = [comp.fw1, comp.fw2];
+
+    if (comp.fw1 && comp.fw2 && !fws.includes(fwId)) {
+        alert("Deseleccione un framework para continuar")
+        return;
+    }
     const fwState = state.getFrameworkData(fwId);
 
-    // Solo permitimos seleccionar si el test está completo (Fase 4 o 5)
     if (fwState.phase < 4) {
         console.warn("El test debe estar finalizado para comparar.");
         return;
@@ -123,12 +132,10 @@ export function seleccionarFrw(fwId) {
 
     state.toggleComparison(fwId);
 
-    // 1. Actualizar visualmente la Card/Pill
     window.dispatchEvent(new CustomEvent('state:updated', { 
         detail: { fwId, phase: nuevaFase } 
     }));
 
-    // 2. Refrescar el Versus (Mostrar si hay 2, esconder si hay < 2)
     gestionarVersus();
 }
 
@@ -139,11 +146,9 @@ function gestionarVersus() {
     const {fw1, fw2} = comparison;
     const section = document.getElementById('versus-section');
 
-    // Limpiamos el dashboard de versus para que no se mezclen
     document.getElementById('versus-dashboard').innerHTML = '';
     document.getElementById('versus-scoreboard').innerHTML = '';
 
-    // Si tenemos los dos frameworks seleccionados
     if (fw1 && fw2) {
         section.style.display = 'block';
         renderVersusDashboard(fw1, fw2);
@@ -163,8 +168,8 @@ function gestionarVersus() {
 
 function mostrarHeaderVersus() {
     const headerContent = document.getElementById('header-content');
-    const header = `<h2>⚔️ Comparison Arena</h2>
-                    <p>Head-to-head technical analysis between the selected frameworks.</p>
+    const header = `<h2> Comparison Section </h2>
+                    <p>Head-to-head technical analysis between the selected frameworks. <br> Mean (20 runs) · Scenario-specific · Not a ranking</p>
                     <div class="versus-mode-selector">
                         <span class="mode-label">Mode:</span>
                         <div class="switch-group">
@@ -178,10 +183,8 @@ function mostrarHeaderVersus() {
     headerContent.innerHTML = header;
 
     headerContent.addEventListener('click', (e) => {
-        // 1. Detectar qué elemento se clickeó
         const target = e.target;
         
-        // 2. Buscar el ID del framework en el ancestro más cercano (la card)
         const card = target.closest('.switch-group');
         if (!card) return;
         if (target.classList.contains('btn-mode-light')) {
@@ -198,22 +201,6 @@ function mostrarHeaderVersus() {
     document.getElementById('btn-mode-heavy').classList.toggle('active', mode === 'heavy');
 }
 
-
-function openVersusReport() {
-    const section = document.getElementById('versus-section');
-    section.style.display = 'block';
-    
-    // Renderizamos el contenido que ya teníamos
-    const {fw1, fw2} = state.getComparison();
-    renderVersusDashboard(fw1, fw2);
-
-    // Scroll suave hacia la sección
-    section.scrollIntoView({ behavior: 'smooth' });
-}
-
-function closeVersus() {
-    document.getElementById('versus-section').style.display = 'none';
-}
 
 export function setVersusMode(mode) {
     state.setVersusMode(mode)

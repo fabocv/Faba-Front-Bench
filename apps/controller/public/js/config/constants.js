@@ -10,10 +10,10 @@ export const metricsConfig = [
 ];
 
 export const metricsVersus = [
-    { id: 'bundle', label: 'Bundle JS (KB)', path: ['network', 'jsBundleKB'], subtitle: 'Weight: How much should the user unload?' },
-    { id: 'fcp', label: 'FCP (ms)', path: ['performance', 'FCPms'], subtitle: 'Perception: How long it takes for something to appear on the screen.' },
-    { id: 'ftts', label: 'FTTS (ms)', path: ['performance', 'FTTSms'] , subtitle: 'Interactivity: When the site is no longer frozen.'},
-    { id: 'memory', label: 'Memory (MB)', path: ['memory', 'jsHeapUsedMB'], subtitle: 'Memory: How much effort does it require from the PC/Mobile?'}
+    { id: 'bundle', label: 'Bundle JS (KB)', path: ['network', 'jsBundleKB'], subtitle: `Weight: Initial payload cost for the end-user's data plan` },
+    { id: 'fcp', label: 'FCP (ms)', path: ['performance', 'FCPms'], subtitle: 'Perception: Time until the first visual element is rendered.' },
+    { id: 'ftts', label: 'FTTS (ms)', path: ['performance', 'FTTSms'] , subtitle: 'Interactivity: Time until the main thread remains stable for 300ms post-render.'},
+    { id: 'memory', label: 'Memory (MB)', path: ['memory', 'jsHeapUsedMB'], subtitle: 'Memory: JavaScript heap used after initial stability is reached.'}
 ];
 
 export const FRAMEWORKS = {
