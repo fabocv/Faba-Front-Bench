@@ -1,6 +1,6 @@
 {
-  "name": "faba-benchmark-v1.2",
-  "version": "1.2.1",
+  "name": "faba-front-bench",
+  "version": "1.2.6",
   "scripts": {
     "clean": "npx kill-port 3000 3001 3002 3003 3004 3005 3006 4201 4202",
     "start:ctrl": "cd apps/controller && node server.js & sleep 2 && npx open-cli http://localhost:3000",
