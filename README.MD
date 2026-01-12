@@ -80,6 +80,8 @@ Se han completado satisfactoriamente los tests de:
 
 ![resumen de test v1.2](./docs/img/report1.2.png)
 
+![comparador v 1.2.6](./docs/img/comparison_v1.2.6.png)
+
 
 ## 🚀 Instalación Rápida
 1. Si tienes node, registra tu versión  (Ej: 20.10) porque el script siguiente **actualizará a la fuerza a la última versión LTS (v22+)**.
